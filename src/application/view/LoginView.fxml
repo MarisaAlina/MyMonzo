@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.LoginController">
+   <children>
+      <Pane fx:id="pane" prefHeight="358.0" prefWidth="342.0">
+         <children>
+            <Button id="loginButton" fx:id="loginButton" layoutX="140.0" layoutY="271.0" mnemonicParsing="false" onAction="#performLogin" text="Access" />
+            <ImageView id="piggyImage" fitHeight="150.0" fitWidth="200.0" layoutX="96.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../img/piggy-lime.png" />
+               </image>
+            </ImageView>
+            <PasswordField id="passwordTextField" layoutX="88.0" layoutY="215.0" promptText="Enter the secret word!" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

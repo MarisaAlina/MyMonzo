@@ -1,0 +1,81 @@
+/* JavaFX CSS - Ubiquitous styling rules for "MyMonzo" using -fx-Property 
+ * colour scheme: https://www.pantone.com/pantone-color-institute-releases-spring-2018-fashion-color-trend-report-for-london-fashion-week
+ * References: https://docs.oracle.com/cd/E17802_01/javafx/javafx/1.3/docs/api/javafx.scene/doc-files/cssref.html
+ * 
+ * Palace Blue
+ * #B17F80
+ * Cherry Tomato
+ * #E93E31
+ * Ash Rose
+ * #B17F80
+ * Nile Green
+ * #aac999
+ * Meadow Lark
+ * #E9D75A
+ * Blooming Dahlia
+ * #E99689
+ * Almost Mauve
+ * #E7DCD9
+ * Rapture Rose
+ * #CF6378
+ * Lime Punch
+ * #C0D53B
+ * 
+ * Sailor Blue
+ * #103B52
+ * Harbour Mist
+ * #AFB1B4
+ * Warm Sand
+ * #C4AD92
+ * Coconut Milk
+ * #F0EDE5
+ */
+ 
+  .root {
+ 	-fx-background-color: #103B52; 
+ }
+ 
+ /*
+  * ________CUSTOMIZED BUTTONS______
+  */
+  
+   .button {
+ 	-fx-font-size: 15px;
+ 	-fx-font-family: "Avenir";
+ 	-fx-background-color:  #aac999;
+ 	-fx-text-fill: #F0EDE5;
+ 	-fx-border-radius: 6.0;
+ }
+ 
+  
+ #loginButton {
+	-fx-font-size: 15px;
+ 	-fx-font-family: "Futura";
+ 	-fx-background-color: #E93E31;
+ 	-fx-text-fill: #F0EDE5;
+ 	-fx-border-radius: 8.0;
+}
+  
+
+#exitButton {
+	-fx-font-size: 15px;
+ 	-fx-font-family: "Futura";
+ 	-fx-background-color: #E93E31;
+ 	-fx-text-fill: #F0EDE5;
+ 	-fx-border-radius: 8.0;
+}
+ 
+ 
+/*
+ * _____MAIN APP STYLES_____
+ */
+ 
+ #mainImage {
+    -fx-background-image: url("img/piggy.svg");
+    -fx-opacity: 0.9;
+}
+
+.label {
+	-fx-font-family:"Futura";
+	-fx-text-fill: #F0EDE5;
+}
