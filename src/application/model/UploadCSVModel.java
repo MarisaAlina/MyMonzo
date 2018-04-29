@@ -13,12 +13,13 @@ public class UploadCSVModel {
 
 	Connection connection;
 
-	public UploadCSVModel(){
+	public UploadCSVModel() {
 		connection = SQLiteConnection.Connector();
 		if (connection == null) {
-			LOGGER.setLevel(Level.WARNING);
-			System.out.println("No connection established");
+			LOGGER.log(Level.WARNING, "No db connection established");
+
 		}
+	}
 
 		public boolean isDBConnected() {
 			try {
@@ -31,4 +32,4 @@ public class UploadCSVModel {
 		}
 
 	}
-}
+
