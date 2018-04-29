@@ -9,7 +9,7 @@ import java.util.Date;
 // ORMLite Annotation: http://ormlite.com/javadoc/ormlite-core/doc-files/ormlite_2.html#Class-Setup
 
 @DatabaseTable
-public class lineItem {
+public class LineItem {
 
     @Generated("id")
     private String id;
@@ -24,7 +24,7 @@ public class lineItem {
     private Category category;
 
 
-    public lineItem(int value, Date date, String description, Category category) {
+    public LineItem(int value, Date date, String description, Category category) {
         this.value = value;
         this.date = date;
         this.description = description;
@@ -32,8 +32,18 @@ public class lineItem {
     }
 
     // When an object is returned from a query, ORMLite constructs the object using Java reflection and a constructor needs to be called.
-    public lineItem() {
+    public LineItem() {
     }
+
+
+    public Category classifier(LineItem lineItem){
+        String description = lineItem.getDescription();
+        switch (description) {
+            case "TFL": return Category.TFL;
+            default: return Category.TO_BE_DEFINED;
+        }
+    }
+
 
 
     public String getId() {
@@ -78,7 +88,7 @@ public class lineItem {
 
     @Override
     public String toString() {
-        return "lineItem{" +
+        return "LineItem{" +
                 "id='" + id + '\'' +
                 ", value=" + value +
                 ", date=" + date +

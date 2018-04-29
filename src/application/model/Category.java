@@ -20,7 +20,8 @@ public enum Category {
     DEBT_REDUCTION("Debt_Reduction"),
     EVENTS("Events"),
     GIFTS("Gifts"),
-    EDUCATION("Education");
+    EDUCATION("Education"),
+    TO_BE_DEFINED("To_be_defined");
 
     private String name;
 
