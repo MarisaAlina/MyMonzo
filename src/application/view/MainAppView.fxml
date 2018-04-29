@@ -2,7 +2,6 @@
 
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Button?>
@@ -13,13 +12,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.MainAppController">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.MainAppController">
    <children>
-      <Pane id="rightPane" layoutX="-130.0" layoutY="-215.0" prefHeight="765.0" prefWidth="894.0">
+      <Pane id="rightPane" layoutX="-130.0" layoutY="-215.0" prefHeight="849.0" prefWidth="996.0">
          <children>
-            <Label id="overviewLbl" layoutX="307.0" layoutY="246.0" text="OVERVIEW" />
-            <PieChart id="pieChart1" layoutX="653.0" layoutY="541.0" prefHeight="106.0" prefWidth="167.0" title="Pie Chart I" />
-            <BarChart id="barChart1" layoutX="310.0" layoutY="304.0" prefHeight="158.0" prefWidth="289.0" title="Bar Chart I">
+            <PieChart id="pieChart1" layoutX="708.0" layoutY="479.0" prefHeight="237.0" prefWidth="274.0" title="Pie Chart I" />
+            <BarChart id="barChart1" layoutX="310.0" layoutY="304.0" prefHeight="430.0" prefWidth="378.0" title="Per Category">
               <xAxis>
                 <CategoryAxis side="BOTTOM" />
               </xAxis>
@@ -27,27 +25,18 @@
                 <NumberAxis side="LEFT" />
               </yAxis>
             </BarChart>
-            <LineChart id="trendLineChart" layoutX="310.0" layoutY="528.0" prefHeight="150.0" prefWidth="227.0" title="Trend Line">
-              <xAxis>
-                <CategoryAxis side="BOTTOM" />
-              </xAxis>
-              <yAxis>
-                <NumberAxis side="LEFT" />
-              </yAxis>
-            </LineChart>
-            <Label id="currentMonthLabel" layoutX="696.0" layoutY="246.0" text="CURRENT MONTH" />
-            <Label id="legendeLabel" layoutX="723.0" layoutY="341.0" text="LEGENDE" />
-            <Separator layoutX="277.0" layoutY="214.0" orientation="VERTICAL" prefHeight="550.0" prefWidth="3.0" />
+            <Label id="currentMonthLabel" layoutX="796.0" layoutY="255.0" text="CURRENT MONTH" />
+            <Label id="legendeLabel" layoutX="845.0" layoutY="333.0" text="LEGENDE" />
+            <Separator layoutX="277.0" layoutY="214.0" orientation="VERTICAL" prefHeight="634.0" prefWidth="4.0" />
             <Button id="thisMonthButton" layoutX="132.0" layoutY="314.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="141.0" text="THIS MONTH" />
             <Button id="pastMonthsButton" layoutX="132.0" layoutY="369.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="141.0" text="PAST MONTHS" />
-            <Button id="uploadNewFileButton" layoutX="132.0" layoutY="420.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="141.0" text="UPLOAD" />
-            <Button id="exitButton" layoutX="133.0" layoutY="665.0" mnemonicParsing="false" onAction="#exitProgramme" prefHeight="27.0" prefWidth="141.0" text="EXIT" />
-            <ImageView fitHeight="39.0" fitWidth="37.0" layoutX="181.0" layoutY="712.0">
+            <Button id="uploadNewFileButton" layoutX="132.0" layoutY="250.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="141.0" text="PARSE CSV" />
+            <Button id="exitButton" layoutX="133.0" layoutY="722.0" mnemonicParsing="false" onAction="#exitProgramme" prefHeight="27.0" prefWidth="141.0" text="EXIT" />
+            <ImageView fitHeight="39.0" fitWidth="37.0" layoutX="185.0" layoutY="776.0">
                <image>
                   <Image url="@../../../img/piggy-lime.png" />
                </image>
             </ImageView>
-            <Label id="currentMonthLabel" fx:id="updateCurrentMonthLabel" layoutX="832.0" layoutY="246.0" text="update" />
          </children>
       </Pane>
    </children>
