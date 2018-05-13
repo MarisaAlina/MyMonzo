@@ -35,15 +35,18 @@ public class LineItem {
     public LineItem() {
     }
 
-
-    public Category classifier(LineItem lineItem){
+    // Method to classify lineItems by description to pre-defined budgeting categories
+    // Todo: add all switch cases
+    // Todo: lineItem needs to be identified by CSV parser to assign description field
+    public Category classifier(LineItem lineItem) {
         String description = lineItem.getDescription();
         switch (description) {
-            case "TFL": return Category.TFL;
-            default: return Category.TO_BE_DEFINED;
+            case "TFL":
+                return Category.TFL;
+            default:
+                return Category.TO_BE_DEFINED;
         }
     }
-
 
 
     public String getId() {

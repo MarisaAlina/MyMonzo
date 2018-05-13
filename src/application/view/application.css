@@ -41,9 +41,9 @@
   
    .button {
  	-fx-font-size: 15px;
- 	-fx-font-family: "Avenir";
+ 	-fx-font-family: "Futura";
  	-fx-background-color:  #00d1b4;
- 	-fx-text-fill: #F0EDE5;
+ 	-fx-text-fill: #363636;
  	-fx-border-radius: 6.0;
  }
   
