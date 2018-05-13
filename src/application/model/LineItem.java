@@ -1,6 +1,8 @@
 package application.model;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.logger.Logger;
+import com.j256.ormlite.logger.LoggerFactory;
 import com.j256.ormlite.table.DatabaseTable;
 
 import javax.annotation.Generated;
@@ -23,6 +25,7 @@ public class LineItem {
     @DatabaseField
     private Category category;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(LineItem.class);
 
     public LineItem(int value, Date date, String description, Category category) {
         this.value = value;
@@ -39,11 +42,14 @@ public class LineItem {
     // Todo: add all switch cases
     // Todo: lineItem needs to be identified by CSV parser to assign description field
     public Category classifier(LineItem lineItem) {
+        LOGGER.info("Classifying {} to defined category", lineItem.toString());
         String description = lineItem.getDescription();
         switch (description) {
             case "TFL":
+                LOGGER.info("Classifying {} to {}", lineItem.toString(), Category.TFL);
                 return Category.TFL;
             default:
+                LOGGER.info("{} not classifiable", lineItem.toString());
                 return Category.TO_BE_DEFINED;
         }
     }
