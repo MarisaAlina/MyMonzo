@@ -33,30 +33,6 @@ public class MainApp extends Application {
 		this.showMainScene();
 	}
 
-	//	public void showLogin() {
-	//		try {
-	//			// the loader class does all the file handling, you only need to give it the path to the file with the styles
-	//			FXMLLoader loader = new FXMLLoader();
-	//			loader.setLocation(getClass().getResource("view/LoginView.fxml"));
-	//			// Javafx models a scene like a tree/ graph structure: http://docs.oracle.com/javafx/2/scenegraph/jfxpub-scenegraph.htm
-	//			Parent root = loader.load();
-	//			// instantiating the Login window as node from Parent root tree with the stylesheet
-	//			Scene loginScene = new Scene(root);
-	//			loginScene.getStylesheets().add(getClass().getResource("view/application.css").toExternalForm());
-	//
-	//			//accessing respective controller for data exchange - imports class
-	//			LoginController lgCtr = loader.getController();
-	//			lgCtr.setApp(this);
-	//
-	//			//show Login scene
-	//			primaryStage.setScene(loginScene);
-	//			primaryStage.show();
-	//
-	//		}catch (Exception e){
-	//			e.printStackTrace();
-	//		}
-	//	}
-
 	public void showMainScene() {
 		try {
 

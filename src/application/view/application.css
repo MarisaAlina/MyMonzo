@@ -32,7 +32,7 @@
  */
  
   .root {
- 	-fx-background-color: #103B52; 
+ 	-fx-background-color: #FFFFFF;
  }
  
  /*
@@ -42,26 +42,17 @@
    .button {
  	-fx-font-size: 15px;
  	-fx-font-family: "Avenir";
- 	-fx-background-color:  #aac999;
+ 	-fx-background-color:  #00d1b4;
  	-fx-text-fill: #F0EDE5;
  	-fx-border-radius: 6.0;
  }
- 
-  
- #loginButton {
-	-fx-font-size: 15px;
- 	-fx-font-family: "Futura";
- 	-fx-background-color: #E93E31;
- 	-fx-text-fill: #F0EDE5;
- 	-fx-border-radius: 8.0;
-}
   
 
 #exitButton {
 	-fx-font-size: 15px;
  	-fx-font-family: "Futura";
- 	-fx-background-color: #E93E31;
- 	-fx-text-fill: #F0EDE5;
+ 	-fx-background-color: #FF3560;
+ 	-fx-text-fill: #FFFFFF;
  	-fx-border-radius: 8.0;
 }
  
@@ -77,5 +68,5 @@
 
 .label {
 	-fx-font-family:"Futura";
-	-fx-text-fill: #F0EDE5;
+	-fx-text-fill: #363636;
 }
