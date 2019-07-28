@@ -9,7 +9,7 @@ public enum Category {
     RENT("Rent"),
     PHONE("Phone"),
     GYM("Gym"),
-    BEAUTY_BODY("Beauty_Body"),
+    BEAUTY("Beauty"),
     VACATION("Vacation"),
     CLOTHING("Clothing"),
     TFL("TFL"),
