@@ -1,52 +1,50 @@
 package application;
 
+import application.model.Category;
 import application.model.LineItem;
 import com.j256.ormlite.logger.Logger;
 import com.j256.ormlite.logger.LoggerFactory;
 
-import java.io.*;
-
-// Reference: https://www.mkyong.com/java/how-to-read-and-parse-csv-file-in-java/
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CSVParser {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CSVParser.class);
 
-    String PATH = "/Users/Marisa/Desktop/Transactions2018.csv";
-    String line = "";
-    String splitByComma = ",";
+    private String splitByComma = ",";
 
-    private LineItem lineItem;
+    private List<LineItem> lineItemsFromCSV;
 
-    public LineItem parseCSV() {
+    private List<LineItem> categorizedLineItems;
+
+
+    public List<LineItem> parseCSV(String PATH) {
+
+        lineItemsFromCSV = new ArrayList<>();
+
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(PATH))) {
             LOGGER.info("Start parsing file at PATH: {}", PATH);
-            String[] lineItemPerRow = new String[0];
 
-            // converts bytes from CSV into chars
-            // then returns arrays of Lineitems; word = one cell per row
-            // new String[] for each row
-            while ((line = bufferedReader.readLine()) != null) {
-                lineItemPerRow = line.split(splitByComma);
+            String headerLine = bufferedReader.readLine();
+            LOGGER.info("headerLine: {}", headerLine);
 
-               /* for (String word : lineItems) {
-                    LOGGER.info("CSV splitter test - word: {}", word);
-                }
+            String nextLine;
 
-                for (int i = 0; i < lineItemsPerRow.length; i++) {
-                    LOGGER.info("word on position {}: {} ", i, lineItemsPerRow[i]);
-                    System.out.println(lineItemsPerRow.toString());
-                } */
+            while ((nextLine = bufferedReader.readLine()) != null) {
 
+                String[] lineItemPerRow = nextLine.split(splitByComma);
 
-                /*lineItem = returnLineItemsFromFile(lineItemsPerRow);*/
-
-                LOGGER.info("Finished parsing one row.");
+                LOGGER.info("===============================");
 
                 String date = lineItemPerRow[0];
                 String description = lineItemPerRow[1];
                 String transactionType = lineItemPerRow[2];
                 String moneyOut = lineItemPerRow[4];
+                Category notYetAssigned = Category.NOT_YET_ASSIGNED;
 
                 double amount = 0.0;
 
@@ -56,45 +54,35 @@ public class CSVParser {
                     if (moneyOut.toCharArray().length == 1) {
                         LOGGER.info("Cell is char, exception: {}", nfe);
                     } else {
-                        LOGGER.info("First round exception: {} ", nfe);
+                        LOGGER.info("First row is description. Exception: {} ", nfe);
                     }
                 }
 
-                lineItem = new LineItem(date, description, transactionType, amount);
-                LOGGER.info("Parsed lineItemObject: {}", lineItem);
-                LOGGER.info("Value: {}", lineItem.getValue());
-                LOGGER.info("Ref: {}", lineItem.getDescription());
-            }
+                LineItem lineItem = new LineItem(date, description, transactionType, amount, notYetAssigned);
+                LOGGER.info("Parsed lineItemObject: {}", lineItem.toString());
 
+                lineItemsFromCSV.add(lineItem);
+            }
 
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
-        return lineItem;
+
+        return lineItemsFromCSV;
     }
 
 
-    public LineItem createLineItemFromParsedFile(String[] lineItemPerRow) {
-        String date = lineItemPerRow[0];
-        String description = lineItemPerRow[1];
-        String transactionType = lineItemPerRow[2];
-        String moneyOut = lineItemPerRow[3];
-        double amount = Double.parseDouble(moneyOut);
+    public List<LineItem> processLineItems(String PATH) {
 
-        lineItem = new LineItem(date, description, transactionType, amount);
-        return lineItem;
-    }
+        categorizedLineItems = new ArrayList<>();
+        List<LineItem> lineItems = parseCSV(PATH);
 
-    /* private double validateAmount(String cell) {
-        try {
-            double amount = Double.parseDouble(cell);
-        } catch (NumberFormatException nfe) {
-            if (cell.toCharArray().length == 1) {
-                LOGGER.info("Cell is char, exception: {}", nfe);
-            } else {
-                LOGGER.info("Other exception: ", nfe);
-            }
+        for (LineItem lineItem : lineItems) {
+            lineItem.classifier(lineItem);
+            LOGGER.info("Processed lineItem with category: {}", lineItem.toString());
+            categorizedLineItems.add(lineItem);
         }
-    }*/
 
+        return categorizedLineItems;
+    }
 }

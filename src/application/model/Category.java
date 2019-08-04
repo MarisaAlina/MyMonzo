@@ -1,7 +1,5 @@
 package application.model;
 
-// https://christianpf.com/basic-personal-budget-categories/
-
 public enum Category {
 
     RESTAURANTS("Restaurants"),
@@ -10,7 +8,7 @@ public enum Category {
     PHONE("Phone"),
     GYM("Gym"),
     BEAUTY("Beauty"),
-    VACATION("Vacation"),
+    TRAVELLING("Travelling"),
     CLOTHING("Clothing"),
     TFL("TFL"),
     BIKE("Bike"),
@@ -21,7 +19,8 @@ public enum Category {
     EVENTS("Events"),
     GIFTS("Gifts"),
     EDUCATION("Education"),
-    TO_BE_DEFINED("To_be_defined");
+    TO_BE_DEFINED("To_be_defined"),
+    NOT_YET_ASSIGNED("Not_yet_assigned");
 
     private String name;
 

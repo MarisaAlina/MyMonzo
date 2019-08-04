@@ -9,30 +9,22 @@ import javafx.scene.control.Button;
 
 public class MainAppController {
 
-	/**
-	 * ====MAINAPP REFERENCE====
-	 */
-	/** Imports the MainApp for data exchange. The app. Reset to 0 to launch when started */
-	private MainApp app = null;
 
-	public void setApp(MainApp input) {
-		this.app = input;
-	}
-	
-	/**
-	 * ====FXML ELEMENTS====
-	 */
-	
-	//Add FXML elements
-	@FXML private Button uploadNewFileButton;
-	@FXML private Button exitButton;
-	
-	/**
-	 * ====EXIT====
-	 */
-	
-	public void exitProgramme(ActionEvent event) throws IOException {
-		this.app.exitProgramme();
-	}
-	
+    // Imports the MainApp for data exchange to View
+    private MainApp app;
+
+    public void setApp(MainApp input) {
+        this.app = input;
+    }
+
+    @FXML
+    private Button uploadNewFileButton;
+    @FXML
+    private Button exitButton;
+
+
+    public void exitProgramme(ActionEvent event) throws IOException {
+        this.app.exitProgramme();
+    }
+
 }

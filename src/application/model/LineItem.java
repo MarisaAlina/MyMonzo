@@ -24,6 +24,7 @@ public class LineItem {
     @DatabaseField
     private String description;
 
+    @DatabaseField
     private String transactionType;
 
     @DatabaseField
@@ -38,7 +39,7 @@ public class LineItem {
         this.transactionType = transactionType;
     }
 
-    public LineItem(String date, double value, String description, Category category) {
+    public LineItem(String date, String description, String transactionType, double value, Category category) {
         this.date = date;
         this.value = value;
         this.description = description;
@@ -47,22 +48,26 @@ public class LineItem {
 
     // When an object is returned from a query
     // ORMLite constructs the object using Java reflection and a constructor call
-    public LineItem() { }
+    public LineItem() {
+    }
 
-    // Method to classify lineItems by description to pre-defined budgeting categories
-    // Todo: lineItem needs to be identified by CSV parser
-    // then assigned to description field through switch cases
-    public Category classifier(LineItem lineItem) {
+    public LineItem classifier(LineItem lineItem) {
         String description = lineItem.getDescription();
-
         switch (description) {
             case "TFL":
                 LOGGER.info("Classifying {} to {}", lineItem.toString(), Category.TFL);
-                return Category.TFL;
+                lineItem.category = Category.TFL;
+            case "Restaurants":
+                LOGGER.info("Classifying {} to {}", lineItem.toString(), Category.RESTAURANTS);
+            case "Rent":
+                LOGGER.info("Classifying {} to {}", lineItem.toString(), Category.RENT);
+            case "Travelling":
+                LOGGER.info("Classifying {} to {}", lineItem.toString(), Category.TRAVELLING);
             default:
                 LOGGER.info("{} not classified", lineItem.toString());
-                return Category.TO_BE_DEFINED;
+                lineItem.category = Category.TO_BE_DEFINED;
         }
+        return lineItem;
     }
 
 
