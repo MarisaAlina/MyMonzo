@@ -4,6 +4,8 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.logger.Logger;
 import com.j256.ormlite.logger.LoggerFactory;
 import com.j256.ormlite.table.DatabaseTable;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.StringProperty;
 
 import javax.annotation.Generated;
 
@@ -16,7 +18,7 @@ public class LineItem {
     private String id;
 
     @DatabaseField
-    private double value;
+    private Double value;
 
     @DatabaseField
     private String date;
