@@ -1,7 +1,8 @@
 package application;
 
+import application.model.CSVParser;
 import application.model.LineItem;
-import application.view.MyMonzoController;
+import application.controller.MyMonzoController;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,7 +28,6 @@ public class Main extends Application {
 
     private static String PATH;
 
-
     public static String getPATH() {
         return PATH;
     }
@@ -37,7 +37,6 @@ public class Main extends Application {
     }
 
     private ObservableList<LineItem> itemsObservableList = FXCollections.observableArrayList();
-
 
     public ObservableList<LineItem> getLineItems() {
         return itemsObservableList;
@@ -66,7 +65,6 @@ public class Main extends Application {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("view/MyMonzoView.fxml"));
-            // loads ctrl plus view -> initialising @FXML
             Parent root = loader.load();
 
             Scene mainScene = new Scene(root);

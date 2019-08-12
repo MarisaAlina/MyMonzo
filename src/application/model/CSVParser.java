@@ -1,12 +1,7 @@
-package application;
+package application.model;
 
-import application.model.Category;
-import application.model.LineItem;
 import com.j256.ormlite.logger.Logger;
 import com.j256.ormlite.logger.LoggerFactory;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -49,25 +44,10 @@ public class CSVParser {
                 String moneyOut = currentLine[4];
                 Category notYetAssigned = Category.NOT_YET_ASSIGNED;
 
-                double amount = 0.0;
+                double amount = parseAmount(moneyOut);
+                String trimmedDescription = trimDescriptionFieldOfDate(description);
 
-                try {
-                    amount = Double.parseDouble(moneyOut);
-                } catch (NumberFormatException nfe) {
-                    if (moneyOut.toCharArray().length == 1) {
-                        LOGGER.info("Cell is char, exception: {}", nfe);
-                    } else {
-                        LOGGER.info("First row is description. Exception: {} ", nfe);
-                    }
-                }
-
-//                SimpleStringProperty dateParsed = new SimpleStringProperty(date);
-//                SimpleStringProperty descriptionParsed = new SimpleStringProperty(description);
-//                SimpleDoubleProperty amountParsed = new SimpleDoubleProperty(amount);
-//                SimpleObjectProperty<Category> category = new SimpleObjectProperty<Category>(Category.NOT_YET_ASSIGNED);
-
-                LineItem lineItem = new LineItem(date, description, amount, notYetAssigned);
-//                LineItem lineItem = new LineItem(dateParsed, descriptionParsed, amountParsed, category);
+                LineItem lineItem = new LineItem(date, trimmedDescription, amount, notYetAssigned);
                 LOGGER.info("Parsed lineItemObject: {}", lineItem.toString());
 
                 lineItemsFromCSV.add(lineItem);
@@ -94,4 +74,29 @@ public class CSVParser {
 
         return categorizedLineItems;
     }
+
+    private String trimDescriptionFieldOfDate(String description) {
+        String trimmedDescription = description.substring(description.lastIndexOf("8")+1);
+        return trimmedDescription.trim();
+    }
+
+    private Double parseAmount(String moneyOut) {
+
+        double amount = 0.0;
+
+        try {
+            amount = Double.parseDouble(moneyOut);
+        } catch (NumberFormatException nfe) {
+            if (moneyOut.toCharArray().length == 1) {
+                LOGGER.info("Cell is char, exception: {}", nfe);
+            } else {
+                LOGGER.info("First row is description. Exception: {} ", nfe);
+            }
+        }
+
+        return amount;
+    }
+
+
+
 }
