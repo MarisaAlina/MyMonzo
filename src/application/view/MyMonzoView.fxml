@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="application.view.MyMonzoController">
+    <children>
+        <Pane id="rightPane" layoutX="-130.0" layoutY="-215.0" prefHeight="849.0" prefWidth="996.0">
+            <children>
+                <PieChart id="pieChart1" layoutX="708.0" layoutY="531.0" prefHeight="237.0" prefWidth="274.0"
+                          title="Pie Chart I"/>
+                <BarChart id="barChart1" layoutX="314.0" layoutY="546.0" prefHeight="230.0" prefWidth="374.0"
+                          title="Per Category">
+                    <xAxis>
+                        <CategoryAxis side="BOTTOM"/>
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis side="LEFT"/>
+                    </yAxis>
+                </BarChart>
+                <Separator layoutX="277.0" layoutY="214.0" orientation="VERTICAL" prefHeight="634.0" prefWidth="4.0"/>
+                <Button fx:id="uploadNewFileButton" layoutX="132.0" layoutY="250.0" mnemonicParsing="false"
+                        prefHeight="27.0" prefWidth="141.0" text="UPLOAD CSV"/>
+                <Button fx:id="exitButton" layoutX="133.0" layoutY="722.0" mnemonicParsing="false"
+                        onAction="#exitProgramme" prefHeight="27.0" prefWidth="141.0" text="EXIT"/>
+                <ImageView fitHeight="39.0" fitWidth="37.0" layoutX="185.0" layoutY="776.0">
+                    <image>
+                        <Image url="@../../../img/piggy-lime.png"/>
+                    </image>
+                </ImageView>
+                <TableView fx:id="csvDataDisplayTable" layoutX="314.0" layoutY="242.0" prefHeight="255.0"
+                           prefWidth="455.0">
+                    <columns>
+                        <TableColumn fx:id="dateColumn" prefWidth="75.0" text="Date"/>
+                        <TableColumn fx:id="descriptionColumn" prefWidth="75.0" text="Description"/>
+                        <TableColumn fx:id="amountColumn" prefWidth="75.0" text="Amount"/>
+                        <TableColumn fx:id="categoryColumn" prefWidth="75.0" text="Category"/>
+                    </columns>
+                </TableView>
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

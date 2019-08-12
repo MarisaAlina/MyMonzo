@@ -4,12 +4,15 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.logger.Logger;
 import com.j256.ormlite.logger.LoggerFactory;
 import com.j256.ormlite.table.DatabaseTable;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 import javax.annotation.Generated;
 
-// ORMLite Annotation: http://ormlite.com/javadoc/ormlite-core/doc-files/ormlite_2.html#Class-Setup
+/*
+- ORMLite Annotation: http://ormlite.com/javadoc/ormlite-core/doc-files/ormlite_2.html#Class-Setup
+- https://docs.oracle.com/javafx/2/binding/jfxpub-binding.htm
+ */
+
 
 @DatabaseTable
 public class LineItem {
@@ -18,47 +21,121 @@ public class LineItem {
     private String id;
 
     @DatabaseField
-    private Double value;
+    private SimpleDoubleProperty amount;
 
     @DatabaseField
-    private String date;
+    private SimpleStringProperty date;
 
     @DatabaseField
-    private String description;
+    private SimpleStringProperty description;
 
     @DatabaseField
-    private String transactionType;
+    private SimpleStringProperty transactionType;
 
     @DatabaseField
-    private Category category;
+    private SimpleObjectProperty<Category> category;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LineItem.class);
-
-    public LineItem(String date, String description, String transactionType, double value) {
-        this.value = value;
-        this.date = date;
-        this.description = description;
-        this.transactionType = transactionType;
-    }
-
-    public LineItem(String date, String description, String transactionType, double value, Category category) {
-        this.date = date;
-        this.value = value;
-        this.description = description;
-        this.category = category;
-    }
 
     // When an object is returned from a query
     // ORMLite constructs the object using Java reflection and a constructor call
     public LineItem() {
     }
 
+    public LineItem(SimpleStringProperty date, SimpleStringProperty description, SimpleStringProperty transactionType, SimpleDoubleProperty amount) {
+        this.amount = amount;
+        this.date = date;
+        this.description = description;
+        this.transactionType = transactionType;
+    }
+
+    public LineItem(String date, String description, Double amount, Category category) {
+        this.date = new SimpleStringProperty(date);
+        this.amount = new SimpleDoubleProperty(amount);
+        this.description = new SimpleStringProperty(description);
+        this.category = new SimpleObjectProperty<Category>(category);
+    }
+
+
+    public double getAmount() {
+        return amount.get();
+    }
+
+    public SimpleDoubleProperty amountProperty() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount.set(amount);
+    }
+
+    public String getDate() {
+        return date.get();
+    }
+
+    public SimpleStringProperty dateProperty() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date.set(date);
+    }
+
+    public String getDescription() {
+        return description.get();
+    }
+
+    public SimpleStringProperty descriptionProperty() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description.set(description);
+    }
+
+    public String getTransactionType() {
+        return transactionType.get();
+    }
+
+    public SimpleStringProperty transactionTypeProperty() {
+        return transactionType;
+    }
+
+    public void setTransactionType(String transactionType) {
+        this.transactionType.set(transactionType);
+    }
+
+    public Category getCategory() {
+        return category.get();
+    }
+
+    public SimpleObjectProperty<Category> categoryProperty() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category.set(category);
+    }
+
+    @Override
+    public String toString() {
+        return "LineItem{" +
+                "id='" + id + '\'' +
+                ", amount=" + amount +
+                ", date=" + date +
+                ", description='" + description + '\'' +
+                ", transactionType='" + transactionType + '\'' +
+                ", category=" + category +
+                '}';
+    }
+
+
     public LineItem classifier(LineItem lineItem) {
         String description = lineItem.getDescription();
         switch (description) {
             case "TFL":
                 LOGGER.info("Classifying {} to {}", lineItem.toString(), Category.TFL);
-                lineItem.category = Category.TFL;
+                lineItem.setCategory(Category.TFL);
             case "Restaurants":
                 LOGGER.info("Classifying {} to {}", lineItem.toString(), Category.RESTAURANTS);
             case "Rent":
@@ -67,69 +144,9 @@ public class LineItem {
                 LOGGER.info("Classifying {} to {}", lineItem.toString(), Category.TRAVELLING);
             default:
                 LOGGER.info("{} not classified", lineItem.toString());
-                lineItem.category = Category.TO_BE_DEFINED;
+                lineItem.setCategory(Category.TO_BE_DEFINED);
         }
         return lineItem;
     }
-
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public double getValue() {
-        return value;
-    }
-
-    public void setValue(double value) {
-        this.value = value;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public String getTransactionType() {
-        return transactionType;
-    }
-
-    public void setTransactionType(String transactionType) {
-        this.transactionType = transactionType;
-    }
-
-    @Override
-    public String toString() {
-        return "LineItem{" +
-                "id='" + id + '\'' +
-                ", value=" + value +
-                ", date=" + date +
-                ", description='" + description + '\'' +
-                ", transactionType='" + transactionType + '\'' +
-                ", category=" + category +
-                '}';
-    }
 }
+

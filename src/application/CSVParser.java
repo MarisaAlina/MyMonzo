@@ -4,6 +4,9 @@ import application.model.Category;
 import application.model.LineItem;
 import com.j256.ormlite.logger.Logger;
 import com.j256.ormlite.logger.LoggerFactory;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -36,14 +39,14 @@ public class CSVParser {
 
             while ((nextLine = bufferedReader.readLine()) != null) {
 
-                String[] lineItemPerRow = nextLine.split(splitByComma);
+                String[] currentLine = nextLine.split(splitByComma);
 
                 LOGGER.info("===============================");
 
-                String date = lineItemPerRow[0];
-                String description = lineItemPerRow[1];
-                String transactionType = lineItemPerRow[2];
-                String moneyOut = lineItemPerRow[4];
+                String date = currentLine[0];
+                String description = currentLine[1];
+                String transactionType = currentLine[2];
+                String moneyOut = currentLine[4];
                 Category notYetAssigned = Category.NOT_YET_ASSIGNED;
 
                 double amount = 0.0;
@@ -58,7 +61,13 @@ public class CSVParser {
                     }
                 }
 
-                LineItem lineItem = new LineItem(date, description, transactionType, amount, notYetAssigned);
+//                SimpleStringProperty dateParsed = new SimpleStringProperty(date);
+//                SimpleStringProperty descriptionParsed = new SimpleStringProperty(description);
+//                SimpleDoubleProperty amountParsed = new SimpleDoubleProperty(amount);
+//                SimpleObjectProperty<Category> category = new SimpleObjectProperty<Category>(Category.NOT_YET_ASSIGNED);
+
+                LineItem lineItem = new LineItem(date, description, amount, notYetAssigned);
+//                LineItem lineItem = new LineItem(dateParsed, descriptionParsed, amountParsed, category);
                 LOGGER.info("Parsed lineItemObject: {}", lineItem.toString());
 
                 lineItemsFromCSV.add(lineItem);
@@ -72,13 +81,13 @@ public class CSVParser {
     }
 
 
-    public List<LineItem> processLineItems(String PATH) {
+    public List<LineItem> processLineItems(List<LineItem> lineItemsFromCSV) {
 
         categorizedLineItems = new ArrayList<>();
-        List<LineItem> lineItems = parseCSV(PATH);
 
-        for (LineItem lineItem : lineItems) {
+        for (LineItem lineItem : lineItemsFromCSV) {
             lineItem.classifier(lineItem);
+            LOGGER.info("======================= END PARSING CSV=================");
             LOGGER.info("Processed lineItem with category: {}", lineItem.toString());
             categorizedLineItems.add(lineItem);
         }
