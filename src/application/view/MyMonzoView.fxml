@@ -5,10 +5,12 @@
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -17,8 +19,64 @@
 
 <AnchorPane prefHeight="668.0" prefWidth="871.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.MyMonzoController">
     <children>
-        <Pane id="rightPane" layoutX="-130.0" layoutY="-206.0" prefHeight="849.0" prefWidth="996.0">
+        <Pane id="rightPane" layoutX="-107.0" layoutY="-205.0" prefHeight="879.0" prefWidth="1233.0">
             <children>
+                <Label id="myMonzoLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="155.0" layoutY="335.0" prefHeight="41.0" prefWidth="77.0" text="MyMonzo">
+                    <font>
+                        <Font name="Bifur" size="13.0" />
+                    </font>
+                </Label>
+
+                <Separator layoutX="277.0" layoutY="214.0" orientation="VERTICAL" prefHeight="634.0" prefWidth="4.0" />
+
+                <Button fx:id="exitButton" layoutX="123.0" layoutY="477.0" mnemonicParsing="false" onAction="#exitProgramme" prefHeight="27.0" prefWidth="141.0" text="EXIT" textAlignment="CENTER">
+                    <font>
+                        <Font name="Avenir Light" size="10.0" />
+                    </font>
+                </Button>
+
+                <Button fx:id="uploadNewFileButton" layoutX="123.0" layoutY="411.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="141.0" text="UPLOAD CSV" textAlignment="CENTER">
+                    <font>
+                        <Font name="Avenir Light" size="10.0" />
+                    </font>
+                </Button>
+
+                <ImageView fitHeight="81.0" fitWidth="77.0" layoutX="155.0" layoutY="242.0">
+                    <image>
+                        <Image url="@../../../img/piggy-lime.png" />
+                    </image>
+                </ImageView>
+
+                <TableView fx:id="dataDisplayTable" editable="true" layoutX="314.0" layoutY="242.0" prefHeight="248.0" prefWidth="642.0">
+                    <columns>
+                        <TableColumn fx:id="dateColumn" prefWidth="75.0" text="Date" />
+                        <TableColumn fx:id="descriptionColumn" prefWidth="258.0" text="Description" />
+                        <TableColumn fx:id="amountColumn" prefWidth="103.0" text="Amount" />
+                        <TableColumn fx:id="categoryColumn" onEditCommit="#updateCategory" prefWidth="112.0" text="Category" />
+                    </columns>
+                </TableView>
+
+                <ChoiceBox fx:id="categoryChoiceBox" layoutX="999.0" layoutY="257.0" prefWidth="150.0" />
+
+                <Button fx:id="updateCategoryButton" alignment="CENTER" layoutX="999.0" layoutY="296.0" mnemonicParsing="false" onAction="#updateCategory" prefHeight="34.0" prefWidth="150.0" text="UPDATE CATEGORY" textAlignment="CENTER">
+                    <font>
+                        <Font name="Avenir Light" size="10.0" />
+                    </font>
+                </Button>
+                <Button fx:id="resetAllCategoriesButton" layoutX="999.0" layoutY="452.0" mnemonicParsing="false" onAction="#resetAllCategories" prefHeight="34.0" prefWidth="150.0" text="RESET ALL CATEGORIES" textAlignment="CENTER">
+                    <font>
+                        <Font size="10.0" />
+                    </font>
+                </Button>
+
+                <Button fx:id="addCategoryButton" layoutX="999.0" layoutY="400.0" mnemonicParsing="false" onAction="#addCategory" prefHeight="34.0" prefWidth="150.0" text="ADD CATEGORY" textAlignment="CENTER">
+                    <font>
+                        <Font name="Avenir Light" size="10.0" />
+                    </font>
+                </Button>
+
+                <TextField fx:id="newCategory" layoutX="999.0" layoutY="354.0" prefHeight="34.0" prefWidth="150.0" promptText="enter category" />
+
                 <PieChart id="pieChart1" layoutX="708.0" layoutY="531.0" prefHeight="237.0" prefWidth="274.0" title="Pie Chart I" />
                 <BarChart id="barChart1" layoutX="314.0" layoutY="546.0" prefHeight="230.0" prefWidth="374.0" title="Per Category">
                     <xAxis>
@@ -28,27 +86,7 @@
                         <NumberAxis side="LEFT" />
                     </yAxis>
                 </BarChart>
-                <Separator layoutX="277.0" layoutY="214.0" orientation="VERTICAL" prefHeight="634.0" prefWidth="4.0" />
-                <Button fx:id="uploadNewFileButton" layoutX="132.0" layoutY="411.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="141.0" text="UPLOAD CSV" />
-                <Button fx:id="exitButton" layoutX="132.0" layoutY="477.0" mnemonicParsing="false" onAction="#exitProgramme" prefHeight="27.0" prefWidth="141.0" text="EXIT" />
-                <ImageView fitHeight="81.0" fitWidth="77.0" layoutX="164.0" layoutY="242.0">
-                    <image>
-                        <Image url="@../../../img/piggy-lime.png" />
-                    </image>
-                </ImageView>
-                <TableView fx:id="csvDataDisplayTable" layoutX="314.0" layoutY="242.0" prefHeight="248.0" prefWidth="550.0">
-                    <columns>
-                        <TableColumn fx:id="dateColumn" prefWidth="75.0" text="Date" />
-                        <TableColumn fx:id="descriptionColumn" prefWidth="223.0" text="Description" />
-                        <TableColumn fx:id="amountColumn" prefWidth="73.0" text="Amount" />
-                        <TableColumn fx:id="categoryColumn" prefWidth="177.0" text="Category" />
-                    </columns>
-                </TableView>
-            <Label id="myMonzoLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="164.0" layoutY="335.0" prefHeight="41.0" prefWidth="77.0" text="MyMonzo">
-               <font>
-                  <Font name="Avenir Medium" size="13.0" />
-               </font>
-            </Label>
+
             </children>
         </Pane>
     </children>

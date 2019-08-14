@@ -40,17 +40,22 @@
   */
   
    .button {
- 	-fx-font-size: 15px;
- 	-fx-font-family: "Futura";
+    -fx-font-size: 11px;
  	-fx-background-color:  #00d1b4;
  	-fx-text-fill: #363636;
- 	-fx-border-radius: 6.0;
+ 	-fx-border-radius: 8.0;
  }
   
 
 #exitButton {
-	-fx-font-size: 15px;
- 	-fx-font-family: "Futura";
+    -fx-font-size: 11px;
+ 	-fx-background-color: #FF3560;
+ 	-fx-text-fill: #FFFFFF;
+ 	-fx-border-radius: 8.0;
+}
+
+#resetAllCategoriesButton {
+    -fx-font-size: 11px;
  	-fx-background-color: #FF3560;
  	-fx-text-fill: #FFFFFF;
  	-fx-border-radius: 8.0;
@@ -67,6 +72,5 @@
 }
 
 .label {
-	-fx-font-family:"Futura";
 	-fx-text-fill: #363636;
 }

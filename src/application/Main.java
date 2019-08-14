@@ -1,6 +1,7 @@
 package application;
 
 import application.model.CSVParser;
+import application.model.Category;
 import application.model.LineItem;
 import application.controller.MyMonzoController;
 import javafx.application.Application;
@@ -11,6 +12,7 @@ import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
+import java.util.Arrays;
 import java.util.List;
 
 import com.j256.ormlite.logger.Logger;
@@ -87,14 +89,11 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-
         if (args.length == 0) {
             LOGGER.info("Please provide file location");
             System.exit(0);
         }
-
         setPATH(args[0]);
-
         launch(args);
     }
 }

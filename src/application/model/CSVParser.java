@@ -6,8 +6,12 @@ import com.j256.ormlite.logger.LoggerFactory;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class CSVParser {
 
@@ -76,14 +80,51 @@ public class CSVParser {
     }
 
     private String trimDescriptionFieldOfDate(String description) {
-        String trimmedDescription = description.substring(description.lastIndexOf("8")+1);
-        return trimmedDescription.trim();
+
+//        String string = "09 May 18";
+//        SimpleDateFormat format = new SimpleDateFormat("dd MMM yy", Locale.UK);
+//        Date date = format.parse(string);
+//        System.out.println(date);
+
+//        // 09 May 18
+//        String dateFormat_1 = "[0-9]{1,2}\\s[a-zA-Z]{3}\\s[0-9]{2}";
+//        // 09/05/18 17:56
+//        String dateFormat_2 = "([0-9]{2})\\/[0-9]{2}\\/([0-9]{2})(((\\s[0-9]{2}:[0-9]{2}))?)";
+//
+//        String[] partsFormat_1 = description.split(dateFormat_1);
+//        String frontInFormat_1 = partsFormat_1[0];
+//
+//        String[] partsFormat_2 = description.split(dateFormat_2);
+//        String frontInFormat_2 = partsFormat_2[0];
+//
+//        String descriptionAfterDate = "";
+//
+//        String[] patterns = {"dd MMM yy", "yy/MM/dd HH:mm"};
+//        String splitOnDate = "";
+//
+//        for (String pattern : patterns) {
+//            try {
+//                SimpleDateFormat formatter = new SimpleDateFormat(pattern, Locale.UK);
+//                Date date = formatter.parse(description);
+//                if (date.equals(frontInFormat_1)) {
+//                    descriptionAfterDate = partsFormat_1[1];
+//                } else if (date.equals(frontInFormat_2)) {
+//                    descriptionAfterDate = partsFormat_2[1];
+//                }
+////                splitOnDate = formatter.format(description);
+//                break;
+//            } catch (ParseException e) {
+//                LOGGER.info("Could not parse date for {} ", description);
+//            }
+//        }
+
+        String descriptionAfterDate = description.substring(description.lastIndexOf("8")+1);
+        return descriptionAfterDate.trim();
     }
 
+
     private Double parseAmount(String moneyOut) {
-
         double amount = 0.0;
-
         try {
             amount = Double.parseDouble(moneyOut);
         } catch (NumberFormatException nfe) {
@@ -93,10 +134,8 @@ public class CSVParser {
                 LOGGER.info("First row is description. Exception: {} ", nfe);
             }
         }
-
         return amount;
     }
-
 
 
 }
