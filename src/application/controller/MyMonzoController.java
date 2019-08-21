@@ -84,18 +84,6 @@ public class MyMonzoController {
         LOGGER.info("Initialised table with data from CSV");
     }
 
-    // does not work
-//    public void updateCategory() {
-//        dataDisplayTable.setEditable(true);
-//        categoryColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<LineItem, String>>() {
-//            @Override
-//            public void handle(TableColumn.CellEditEvent<LineItem, String> event) {
-//                ((LineItem) event.getTableView().getItems().get(event.getTablePosition().getRow())).setCategory(Category.valueOf(event.getNewValue()));
-//                LOGGER.info("Updated lineItem with Category in table");
-//            }
-//        });
-//    }
-
     @FXML
     private void updateCategory(ActionEvent event) {
         LineItem selectedItem = dataDisplayTable.getSelectionModel().getSelectedItem();

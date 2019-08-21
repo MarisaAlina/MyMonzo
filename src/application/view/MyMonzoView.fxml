@@ -47,7 +47,7 @@
                     </image>
                 </ImageView>
 
-                <TableView fx:id="dataDisplayTable" editable="true" layoutX="314.0" layoutY="242.0" prefHeight="248.0" prefWidth="642.0">
+                <TableView fx:id="dataDisplayTable" editable="true" layoutX="314.0" layoutY="242.0" prefHeight="273.0" prefWidth="642.0">
                     <columns>
                         <TableColumn fx:id="dateColumn" prefWidth="75.0" text="Date" />
                         <TableColumn fx:id="descriptionColumn" prefWidth="258.0" text="Description" />
@@ -77,8 +77,8 @@
 
                 <TextField fx:id="newCategory" layoutX="999.0" layoutY="354.0" prefHeight="34.0" prefWidth="150.0" promptText="enter category" />
 
-                <PieChart id="pieChart1" layoutX="708.0" layoutY="531.0" prefHeight="237.0" prefWidth="274.0" title="Pie Chart I" />
-                <BarChart id="barChart1" layoutX="314.0" layoutY="546.0" prefHeight="230.0" prefWidth="374.0" title="Per Category">
+                <PieChart id="pieChart1" layoutX="708.0" layoutY="563.0" prefHeight="237.0" prefWidth="274.0" title="Pie Chart I" />
+                <BarChart id="barChart1" layoutX="314.0" layoutY="578.0" prefHeight="230.0" prefWidth="374.0" title="Per Category">
                     <xAxis>
                         <CategoryAxis side="BOTTOM" />
                     </xAxis>
