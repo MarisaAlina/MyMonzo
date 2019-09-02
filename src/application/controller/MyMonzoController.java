@@ -6,13 +6,13 @@ import application.model.LineItem;
 import com.j256.ormlite.logger.Logger;
 import com.j256.ormlite.logger.LoggerFactory;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.ListIterator;
@@ -73,6 +73,19 @@ public class MyMonzoController {
     @FXML
     private ChoiceBox categoryChoiceBox;
 
+    @FXML
+    private BarChart barChartTotalsPerCategory;
+//
+//    // needs labels
+//    @FXML
+//    private CategoryAxis xAxis;
+//
+//    @FXML
+//    private CategoryAxis yAxis;
+
+    String category1 = "Category1";
+    int yValue = 100;
+
 
     @FXML
     private void initialize() {
@@ -80,6 +93,14 @@ public class MyMonzoController {
         descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
         amountColumn.setCellValueFactory(cellData -> cellData.getValue().amountProperty().asObject());
         categoryColumn.setCellValueFactory(cellData -> cellData.getValue().categoryProperty().asString());
+
+        barChartTotalsPerCategory.setTitle("Totals per Category");
+        XYChart.Series dataSeries1 = new XYChart.Series();
+        dataSeries1.setName("current year");
+
+        dataSeries1.getData().add(new XYChart.Data(category1, yValue));
+        dataSeries1.getData().add(new XYChart.Data("Category2", 50));
+        barChartTotalsPerCategory.getData().add(dataSeries1);
 
         LOGGER.info("Initialised table with data from CSV");
     }
@@ -154,6 +175,8 @@ public class MyMonzoController {
             }
         }
     }
+
+
 }
 
 
