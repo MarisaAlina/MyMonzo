@@ -61,65 +61,41 @@ public class CSVParser {
             ioException.printStackTrace();
         }
 
+        LOGGER.info("======================= END PARSING CSV=================");
         return lineItemsFromCSV;
     }
 
-
+    // TODO: rewrite classifier, currently doesn't work as expected
     public List<LineItem> processLineItems(List<LineItem> lineItemsFromCSV) {
 
+        LOGGER.info("\n\n======================= CATEGORY AUTO-ASSIGNMENT=================\n");
         categorizedLineItems = new ArrayList<>();
 
         for (LineItem lineItem : lineItemsFromCSV) {
             lineItem.classifier(lineItem);
-            LOGGER.info("======================= END PARSING CSV=================");
-            LOGGER.info("Processed lineItem with category: {}", lineItem.toString());
+            LOGGER.info("Processed category for lineItem: {} - {}", lineItem.getDescription(), lineItem.getCategory());
             categorizedLineItems.add(lineItem);
         }
 
+        LOGGER.info("\n\n======================= END OF PROCESSING LINEITEMS =================\n");
         return categorizedLineItems;
     }
 
     private String trimDescriptionFieldOfDate(String description) {
 
-//        String string = "09 May 18";
-//        SimpleDateFormat format = new SimpleDateFormat("dd MMM yy", Locale.UK);
-//        Date date = format.parse(string);
-//        System.out.println(date);
+        String[] patterns = {"dd MMM yy", "dd/MM/yy HH:mm"};
 
-//        // 09 May 18
-//        String dateFormat_1 = "[0-9]{1,2}\\s[a-zA-Z]{3}\\s[0-9]{2}";
-//        // 09/05/18 17:56
-//        String dateFormat_2 = "([0-9]{2})\\/[0-9]{2}\\/([0-9]{2})(((\\s[0-9]{2}:[0-9]{2}))?)";
-//
-//        String[] partsFormat_1 = description.split(dateFormat_1);
-//        String frontInFormat_1 = partsFormat_1[0];
-//
-//        String[] partsFormat_2 = description.split(dateFormat_2);
-//        String frontInFormat_2 = partsFormat_2[0];
-//
-//        String descriptionAfterDate = "";
-//
-//        String[] patterns = {"dd MMM yy", "yy/MM/dd HH:mm"};
-//        String splitOnDate = "";
-//
-//        for (String pattern : patterns) {
-//            try {
-//                SimpleDateFormat formatter = new SimpleDateFormat(pattern, Locale.UK);
-//                Date date = formatter.parse(description);
-//                if (date.equals(frontInFormat_1)) {
-//                    descriptionAfterDate = partsFormat_1[1];
-//                } else if (date.equals(frontInFormat_2)) {
-//                    descriptionAfterDate = partsFormat_2[1];
-//                }
-////                splitOnDate = formatter.format(description);
-//                break;
-//            } catch (ParseException e) {
-//                LOGGER.info("Could not parse date for {} ", description);
-//            }
-//        }
-
-        String descriptionAfterDate = description.substring(description.lastIndexOf("8")+1);
-        return descriptionAfterDate.trim();
+        for (String pattern : patterns) {
+            try {
+                SimpleDateFormat formatter = new SimpleDateFormat(pattern, Locale.UK);
+                Date date = formatter.parse(description.substring(0, pattern.length()));
+                LOGGER.info("Parsed date: {}", date);
+                return description.substring(pattern.length()).trim();
+            } catch (ParseException e) {
+                LOGGER.info("Could not parse date for {}", description);
+            }
+        }
+        return description.trim();
     }
 
 

@@ -69,9 +69,15 @@
                     </font>
                 </Button>
 
-                <Button fx:id="addCategoryButton" layoutX="999.0" layoutY="400.0" mnemonicParsing="false" onAction="#addCategory" prefHeight="34.0" prefWidth="150.0" text="ADD CATEGORY" textAlignment="CENTER">
+                <Button fx:id="addCategoryButton" layoutX="999.0" layoutY="400.0" mnemonicParsing="false" onAction="#addCategoryAndUpdateLineItem" prefHeight="34.0" prefWidth="150.0" text="ADD CATEGORY" textAlignment="CENTER">
                     <font>
                         <Font name="Avenir Light" size="10.0" />
+                    </font>
+                </Button>
+
+                <Button fx:id="sumCategories" layoutX="999.0" layoutY="504.0" mnemonicParsing="false" onAction="#sumUpAllCategories" prefHeight="34.0" prefWidth="150.0" text="SUM CATEGORIES" textAlignment="CENTER">
+                    <font>
+                        <Font size="10.0" />
                     </font>
                 </Button>
 
@@ -79,7 +85,7 @@
 
                 <BarChart fx:id="barChartTotalsPerCategory" layoutX="314.0" layoutY="578.0" prefHeight="230.0" prefWidth="374.0" title="Per Category">
                     <xAxis>
-                        <CategoryAxis fx:id="xAxis" side="BOTTOM" />
+                        <CategoryAxis side="BOTTOM" fx:id="xAxis" />
                     </xAxis>
                     <yAxis>
                         <NumberAxis fx:id="yAxis" side="LEFT" />
@@ -87,6 +93,7 @@
                 </BarChart>
 
                 <PieChart fx:id="pieChart1" layoutX="708.0" layoutY="563.0" prefHeight="237.0" prefWidth="274.0" title="Pie Chart I" />
+
 
             </children>
         </Pane>

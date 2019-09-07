@@ -9,14 +9,13 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.ListIterator;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class MyMonzoController {
 
@@ -50,6 +49,9 @@ public class MyMonzoController {
 
     @FXML
     private Button resetAllCategoriesButton;
+
+    @FXML
+    private Button sumUpAllCategories;
 
 
     @FXML
@@ -111,19 +113,12 @@ public class MyMonzoController {
         LOGGER.info("selected LineItem to update: {}", selectedItem);
 
         Category selectedCategory = (Category) categoryChoiceBox.getValue();
-        //clumsy!?
-        if (selectedItem != null || selectedCategory != null) {
 
-            ListIterator<LineItem> iterator = mainApp.getLineItems().listIterator();
-            while (iterator.hasNext()) {
-                LineItem lineItemToUpdate = iterator.next();
-                if (lineItemToUpdate.equals(selectedItem)) {
-                    lineItemToUpdate.setCategory(selectedCategory);
-                    LOGGER.info("Updated Category {} of lineItem {}", newCategory.getText(), lineItemToUpdate);
-                } else {
-                    LOGGER.info("Could not find specified LineItem");
-                }
-            }
+        // this works because the underlying datastructure of the dataDisplayTable
+        // is the observable List with lineItems
+        if (selectedItem != null || selectedCategory != null) {
+            selectedItem.setCategory(selectedCategory);
+            LOGGER.info("Updated lineItem {} with category: {} ", selectedItem.getCategory());
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("No Valid Input");
@@ -133,23 +128,16 @@ public class MyMonzoController {
         }
     }
 
+    // TODO currently not implemented as would require change of ENUM to String
 
     @FXML
-    private void addCategory(ActionEvent event) {
+    private void addCategoryAndUpdateLineItem(ActionEvent event) {
         LineItem selectedItem = dataDisplayTable.getSelectionModel().getSelectedItem();
         LOGGER.info("selected LineItem to update: {}", selectedItem);
 
         if (newCategory.getText() != null && !newCategory.getText().trim().isEmpty()) {
-
-            for (LineItem lineItem : mainApp.getLineItems()) {
-                if (lineItem.equals(selectedItem)) {
-                    lineItem.setCategory(Category.valueOf(newCategory.getText()));
-                    LOGGER.info("Updated Category {} of lineItem {}", newCategory.getText(), lineItem);
-                } else {
-                    LOGGER.info("Could not find specified LineItem");
-                }
-            }
-
+            selectedItem.setCategory(Category.valueOf(newCategory.getText()));
+            LOGGER.info("Updated lineItem with new Category: {}", selectedItem.getCategory());
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("No Valid Input");
@@ -174,6 +162,42 @@ public class MyMonzoController {
                 LOGGER.info("Reset all categories");
             }
         }
+    }
+
+    @FXML
+    private void sumUpAllCategories(ActionEvent event) {
+        List<LineItem> lineItems = mainApp.getLineItems();
+
+        Double sumPerCategory = lineItems
+                .stream()
+                .filter(lineItem -> lineItem.getCategory().equals("TFL"))
+                .mapToDouble(lineItem -> lineItem.getAmount())
+                .sum();
+
+        LOGGER.info("Result sum: {}", sumPerCategory.toString());
+
+        List<Category> categories = lineItems
+                .stream()
+                .map(LineItem::getCategory)
+                .collect(Collectors.toList());
+
+        LOGGER.info("All Categories: {} ", categories);
+//        categories.forEach(category->LOGGER.info("Categories {} ", category.name()));
+
+        Double total = lineItems
+                .stream()
+                .map(LineItem::getAmount)
+                .reduce(0.0, ((subtotal, element) -> subtotal + element));
+
+
+        LOGGER.info(total.toString());
+
+        Collector<LineItem, ?, Double> summingAmount = Collectors.summingDouble(LineItem::getAmount);
+        Map<Category, Double> sumByCategory = lineItems
+                .stream()
+                .collect(Collectors.groupingBy(LineItem::getCategory, summingAmount));
+
+        sumByCategory.forEach((category, sum) -> LOGGER.info("sumByCategory: {}, {}", category.name(), sum));
     }
 
 

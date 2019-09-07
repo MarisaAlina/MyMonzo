@@ -2,7 +2,6 @@ package application;
 
 import application.controller.MyMonzoController;
 import application.model.CSVParser;
-import application.model.Category;
 import application.model.LineItem;
 import com.j256.ormlite.logger.Logger;
 import com.j256.ormlite.logger.LoggerFactory;
@@ -15,7 +14,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.util.List;
-import java.util.ListIterator;
 
 public class Main extends Application {
 
@@ -52,18 +50,14 @@ public class Main extends Application {
 
         CSVParser csvParser = new CSVParser();
         List<LineItem> lineItemsFromCSV = csvParser.parseCSV(getPATH());
+
+        // TODO currently not working as expected
         categorizedLineItems = csvParser.processLineItems(lineItemsFromCSV);
 
         for (LineItem lineItem : categorizedLineItems) {
-            LOGGER.info("processedCSVFile: {}\nAdding item to observableList for display", lineItem);
             itemsObservableList.add(lineItem);
         }
-
-        Double sumPerCategory = categorizedLineItems.stream()
-                .filter(lineItem -> lineItem.getCategory().equals("TFL"))
-                .mapToDouble(lineItem -> lineItem.getAmount())
-                .sum();
-
+        LOGGER.info("Added categorized LineItems to observableList for display");
 
         this.showMyMonzoScene();
     }

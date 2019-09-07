@@ -13,7 +13,6 @@ import javax.annotation.Generated;
 - https://docs.oracle.com/javafx/2/binding/jfxpub-binding.htm
  */
 
-
 @DatabaseTable
 public class LineItem {
 
@@ -37,8 +36,6 @@ public class LineItem {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LineItem.class);
 
-    // When an object is returned from a query
-    // ORMLite constructs the object using Java reflection and a constructor call
     public LineItem() {
     }
 
@@ -131,20 +128,20 @@ public class LineItem {
 
 
     public LineItem classifier(LineItem lineItem) {
+
         String description = lineItem.getDescription();
+
         switch (description) {
             case "TFL":
-                LOGGER.info("Classifying {} to {}", lineItem.toString(), Category.TFL);
-                lineItem.setCategory(Category.TFL);
+                if (description.contains("TFL")) {
+                    lineItem.setCategory(Category.TFL);
+                    LOGGER.info("Classifying {} to {}", lineItem.getDescription(), Category.TFL);
+                }
             case "Restaurants":
-                LOGGER.info("Classifying {} to {}", lineItem.toString(), Category.RESTAURANTS);
-            case "Rent":
-                LOGGER.info("Classifying {} to {}", lineItem.toString(), Category.RENT);
-            case "Travelling":
-                LOGGER.info("Classifying {} to {}", lineItem.toString(), Category.TRAVELLING);
+                LOGGER.info("Classifying {} to {}", lineItem.getDescription(), Category.RESTAURANTS);
             default:
-                LOGGER.info("{} not classified", lineItem.toString());
                 lineItem.setCategory(Category.TO_BE_DEFINED);
+                LOGGER.info("{} not classified", lineItem.getDescription());
         }
         return lineItem;
     }
