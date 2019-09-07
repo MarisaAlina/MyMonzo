@@ -75,7 +75,7 @@
                     </font>
                 </Button>
 
-                <Button fx:id="sumCategories" layoutX="999.0" layoutY="504.0" mnemonicParsing="false" onAction="#sumUpAllCategories" prefHeight="34.0" prefWidth="150.0" text="SUM CATEGORIES" textAlignment="CENTER">
+                <Button fx:id="sumCategories" layoutX="999.0" layoutY="504.0" mnemonicParsing="false" onAction="#showSumByCategories" prefHeight="34.0" prefWidth="150.0" text="SUM CATEGORIES" textAlignment="CENTER">
                     <font>
                         <Font size="10.0" />
                     </font>
@@ -83,7 +83,7 @@
 
                 <TextField fx:id="newCategory" layoutX="999.0" layoutY="354.0" prefHeight="34.0" prefWidth="150.0" promptText="enter category" />
 
-                <BarChart fx:id="barChartTotalsPerCategory" layoutX="314.0" layoutY="578.0" prefHeight="230.0" prefWidth="374.0" title="Per Category">
+                <BarChart fx:id="barChartTotalsPerCategory" barGap="2.0" categoryGap="2.0" layoutX="314.0" layoutY="578.0" prefHeight="230.0" prefWidth="597.0" title="Per Category">
                     <xAxis>
                         <CategoryAxis side="BOTTOM" fx:id="xAxis" />
                     </xAxis>
@@ -92,8 +92,7 @@
                     </yAxis>
                 </BarChart>
 
-                <PieChart fx:id="pieChart1" layoutX="708.0" layoutY="563.0" prefHeight="237.0" prefWidth="274.0" title="Pie Chart I" />
-
+                <PieChart fx:id="pieChart1" layoutX="912.0" layoutY="571.0" prefHeight="237.0" prefWidth="274.0" title="Pie Chart I" />
 
             </children>
         </Pane>

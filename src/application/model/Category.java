@@ -19,8 +19,7 @@ public enum Category {
     EVENTS("Events"),
     GIFTS("Gifts"),
     EDUCATION("Education"),
-    TO_BE_DEFINED("To_be_defined"),
-    NOT_YET_ASSIGNED("Not_yet_assigned");
+    UNDEFINED("undefined");
 
     private String name;
 

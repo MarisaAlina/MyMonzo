@@ -46,7 +46,7 @@ public class CSVParser {
                 String description = currentLine[1];
                 String transactionType = currentLine[2];
                 String moneyOut = currentLine[4];
-                Category notYetAssigned = Category.NOT_YET_ASSIGNED;
+                Category notYetAssigned = Category.UNDEFINED;
 
                 double amount = parseAmount(moneyOut);
                 String trimmedDescription = trimDescriptionFieldOfDate(description);

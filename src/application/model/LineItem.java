@@ -140,7 +140,7 @@ public class LineItem {
             case "Restaurants":
                 LOGGER.info("Classifying {} to {}", lineItem.getDescription(), Category.RESTAURANTS);
             default:
-                lineItem.setCategory(Category.TO_BE_DEFINED);
+                lineItem.setCategory(Category.UNDEFINED);
                 LOGGER.info("{} not classified", lineItem.getDescription());
         }
         return lineItem;
