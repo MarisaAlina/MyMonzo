@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 
@@ -39,9 +40,6 @@ public class MyMonzoController {
     }
 
     @FXML
-    private TextField newCategory;
-
-    @FXML
     private TableView<LineItem> dataDisplayTable;
 
     @FXML
@@ -60,11 +58,12 @@ public class MyMonzoController {
     private ChoiceBox categoryChoiceBox;
 
     @FXML
-    private BarChart barChartTotalsPerCategory;
+    private BarChart barChart;
+
+    @FXML
+    private PieChart pieChart;
 
     XYChart.Series dataSeries1;
-
-    // Add pie chart
 
 
     @FXML
@@ -73,11 +72,10 @@ public class MyMonzoController {
         descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
         amountColumn.setCellValueFactory(cellData -> cellData.getValue().amountProperty().asObject());
         categoryColumn.setCellValueFactory(cellData -> cellData.getValue().categoryProperty().asString());
-
-        barChartTotalsPerCategory.setTitle("Totals per Category");
-        dataSeries1 = new XYChart.Series();
-
         LOGGER.info("Initialised table with data from CSV");
+
+        barChart.setTitle("Totals per Category");
+        pieChart.setTitle("Category of Total");
     }
 
     // this works because the underlying datastructure of the dataDisplayTable
@@ -99,23 +97,6 @@ public class MyMonzoController {
         }
     }
 
-    // TODO currently not implemented as would require change of ENUM to String
-    @FXML
-    private void addCategoryAndUpdateLineItem(ActionEvent event) {
-        LineItem selectedItem = dataDisplayTable.getSelectionModel().getSelectedItem();
-
-        if (newCategory.getText() != null && !newCategory.getText().trim().isEmpty()) {
-            selectedItem.setCategory(Category.valueOf(newCategory.getText()));
-            LOGGER.info("Updated lineItem with new Category: {} ", selectedItem.getCategory());
-        } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("No Valid Input");
-            alert.setHeaderText("Nothing Entered");
-            alert.setContentText("Please enter a letter, number or punctuation mark.");
-            alert.showAndWait();
-        }
-    }
-
     @FXML
     private void resetAllCategories(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -129,6 +110,7 @@ public class MyMonzoController {
                 lineItem.setCategory(Category.UNDEFINED);
                 LOGGER.info("Reset all categories");
                 dataSeries1.getData().clear();
+                pieChart.getData().clear();
             }
         }
     }
@@ -137,17 +119,30 @@ public class MyMonzoController {
     private void showSumByCategories(ActionEvent event) {
         Map<Category, Double> sumByCategory = sumUpTotalAmountPerCategory();
 
+        if (dataSeries1 == null) {
+            dataSeries1 = new XYChart.Series();
+            LOGGER.info("Initiliazed new dataseries: {}", dataSeries1);
+            // can cause labels to squeeze to the left
+        }
+
+        if (dataSeries1.getData() != null && pieChart.getData() != null) {
+            LOGGER.info("Clearing data from charts");
+            dataSeries1.getData().clear();
+            pieChart.getData().clear();
+            barChart.getData().clear();
+        }
+
         dataSeries1.setName("current year");
-//        dataSeries1.getData().clear();
 
         sumByCategory.forEach((category, sum) -> {
             if (!category.equals(Category.UNDEFINED)) {
                 dataSeries1.getData().add(new XYChart.Data(category.toString(), sum));
-                LOGGER.info("sumByCategory: {}, {}", category.name(), sum);
+                pieChart.getData().add(new PieChart.Data(category.toString(), sum));
+                LOGGER.info("sumByCategory: {}, {} \ndataseries: {} ", category.name(), sum, dataSeries1);
             }
         });
 
-        barChartTotalsPerCategory.getData().add(dataSeries1);
+        barChart.getData().add(dataSeries1);
     }
 
     private Map<Category, Double> sumUpTotalAmountPerCategory() {

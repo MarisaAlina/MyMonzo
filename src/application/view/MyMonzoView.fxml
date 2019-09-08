@@ -10,7 +10,6 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -63,27 +62,19 @@
                         <Font name="Avenir Light" size="10.0" />
                     </font>
                 </Button>
-                <Button fx:id="resetAllCategoriesButton" layoutX="999.0" layoutY="452.0" mnemonicParsing="false" onAction="#resetAllCategories" prefHeight="34.0" prefWidth="150.0" text="RESET ALL CATEGORIES" textAlignment="CENTER">
+                <Button fx:id="resetAllCategoriesButton" layoutX="999.0" layoutY="340.0" mnemonicParsing="false" onAction="#resetAllCategories" prefHeight="34.0" prefWidth="150.0" text="RESET ALL CATEGORIES" textAlignment="CENTER">
                     <font>
                         <Font size="10.0" />
                     </font>
                 </Button>
 
-                <Button fx:id="addCategoryButton" layoutX="999.0" layoutY="400.0" mnemonicParsing="false" onAction="#addCategoryAndUpdateLineItem" prefHeight="34.0" prefWidth="150.0" text="ADD CATEGORY" textAlignment="CENTER">
-                    <font>
-                        <Font name="Avenir Light" size="10.0" />
-                    </font>
-                </Button>
-
-                <Button fx:id="sumCategories" layoutX="999.0" layoutY="504.0" mnemonicParsing="false" onAction="#showSumByCategories" prefHeight="34.0" prefWidth="150.0" text="SUM CATEGORIES" textAlignment="CENTER">
+                <Button fx:id="sumCategories" layoutX="999.0" layoutY="474.0" mnemonicParsing="false" onAction="#showSumByCategories" prefHeight="34.0" prefWidth="150.0" text="SUM CATEGORIES" textAlignment="CENTER">
                     <font>
                         <Font size="10.0" />
                     </font>
                 </Button>
 
-                <TextField fx:id="newCategory" layoutX="999.0" layoutY="354.0" prefHeight="34.0" prefWidth="150.0" promptText="enter category" />
-
-                <BarChart fx:id="barChartTotalsPerCategory" barGap="2.0" categoryGap="2.0" layoutX="314.0" layoutY="578.0" prefHeight="230.0" prefWidth="597.0" title="Per Category">
+                <BarChart fx:id="barChart" barGap="1.0" categoryGap="1.0" layoutX="314.0" layoutY="578.0" prefHeight="230.0" prefWidth="597.0" title="Per Category">
                     <xAxis>
                         <CategoryAxis side="BOTTOM" fx:id="xAxis" />
                     </xAxis>
@@ -92,7 +83,7 @@
                     </yAxis>
                 </BarChart>
 
-                <PieChart fx:id="pieChart1" layoutX="912.0" layoutY="571.0" prefHeight="237.0" prefWidth="274.0" title="Pie Chart I" />
+                <PieChart fx:id="pieChart" layoutX="912.0" layoutY="571.0" prefHeight="237.0" prefWidth="274.0" title="Pie Chart I" />
 
             </children>
         </Pane>
