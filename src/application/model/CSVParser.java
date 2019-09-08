@@ -46,12 +46,22 @@ public class CSVParser {
                 String description = currentLine[1];
                 String transactionType = currentLine[2];
                 String moneyOut = currentLine[4];
-                Category notYetAssigned = Category.UNDEFINED;
+
+                // todo extract into method with catch if enum not found
+                Category category = Category.UNDEFINED;
+
+                if (currentLine[5] != null) {
+                    String assignedCategory = currentLine[5];
+                    if (Category.contains(assignedCategory)) {
+                        category = Category.valueOf(assignedCategory);
+                        LOGGER.info("Assigned category: {}", category.name());
+                    }
+                }
 
                 double amount = parseAmount(moneyOut);
                 String trimmedDescription = trimDescriptionFieldOfDate(description);
 
-                LineItem lineItem = new LineItem(date, trimmedDescription, amount, notYetAssigned);
+                LineItem lineItem = new LineItem(date, trimmedDescription, amount, category);
                 LOGGER.info("Parsed lineItemObject: {}", lineItem.toString());
 
                 lineItemsFromCSV.add(lineItem);

@@ -1,6 +1,7 @@
 package application.controller;
 
 import application.Main;
+import application.model.CSVWriter;
 import application.model.Category;
 import application.model.LineItem;
 import com.j256.ormlite.logger.Logger;
@@ -144,6 +145,12 @@ public class MyMonzoController {
 
         barChart.getData().add(dataSeries1);
     }
+
+    @FXML
+    private void exportAsCSV(ActionEvent event) {
+//        CSVWriter.createCSVString(mainApp.getLineItems(), " ");
+    }
+
 
     private Map<Category, Double> sumUpTotalAmountPerCategory() {
         List<LineItem> lineItems = mainApp.getLineItems();

@@ -1,5 +1,7 @@
 package application.model;
 
+import java.util.HashSet;
+
 public enum Category {
 
     RESTAURANTS("Restaurants"),
@@ -27,7 +29,24 @@ public enum Category {
         name = s;
     }
 
-    public String toString(){
+    public String toString() {
         return this.name;
     }
+
+    public static boolean contains(String input) {
+        for (Category c : Category.values()) {
+            if (c.name().equals(input)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+//    public HashSet<String> getEnums() {
+//        HashSet<String> values = new HashSet<>();
+//        for (Category c : Category.values()) {
+//            values.add(c.name());
+//        }
+//        return values;
+//    }
 }

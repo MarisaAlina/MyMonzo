@@ -28,13 +28,19 @@
 
                 <Separator layoutX="277.0" layoutY="214.0" orientation="VERTICAL" prefHeight="634.0" prefWidth="4.0" />
 
-                <Button fx:id="exitButton" layoutX="123.0" layoutY="477.0" mnemonicParsing="false" onAction="#exitProgramme" prefHeight="27.0" prefWidth="141.0" text="EXIT" textAlignment="CENTER">
+                <Button fx:id="exitButton" layoutX="123.0" layoutY="757.0" mnemonicParsing="false" onAction="#exitProgramme" prefHeight="27.0" prefWidth="141.0" text="EXIT" textAlignment="CENTER">
                     <font>
                         <Font name="Avenir Light" size="10.0" />
                     </font>
                 </Button>
 
-                <Button fx:id="uploadNewFileButton" layoutX="123.0" layoutY="411.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="141.0" text="UPLOAD CSV" textAlignment="CENTER">
+                <Button fx:id="importCSV" layoutX="123.0" layoutY="411.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="141.0" text="IMPORT CSV" textAlignment="CENTER">
+                    <font>
+                        <Font name="Avenir Light" size="10.0" />
+                    </font>
+                </Button>
+
+                <Button fx:id="exportData" layoutX="123.0" layoutY="481.0" mnemonicParsing="false" onAction="#exportAsCSV" prefHeight="27.0" prefWidth="141.0" text="EXPORT CSV" textAlignment="CENTER">
                     <font>
                         <Font name="Avenir Light" size="10.0" />
                     </font>
