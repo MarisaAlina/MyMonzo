@@ -148,7 +148,7 @@ public class MyMonzoController {
 
     @FXML
     private void exportAsCSV(ActionEvent event) {
-//        CSVWriter.createCSVString(mainApp.getLineItems(), " ");
+        CSVWriter.createCSVString(mainApp.getCategorizedLineItems(), " ");
     }
 
 

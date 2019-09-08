@@ -25,6 +25,10 @@ public class Main extends Application {
 
     List<LineItem> categorizedLineItems;
 
+    public List<LineItem> getCategorizedLineItems() {
+        return categorizedLineItems;
+    }
+
     private static String PATH;
 
     public static String getPATH() {

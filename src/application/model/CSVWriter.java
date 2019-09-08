@@ -5,9 +5,11 @@ import java.util.List;
 
 public class CSVWriter {
 
-    // todo has to process List of LineItems to become String
+    // todo has to process List of LineItems to become one big String
     // another option: xml export - will need input change
-    public static String createCSVString(List<List<LineItem>> data, final String separator) {
+
+//    List<List<String>>
+    public static String createCSVString(List<LineItem> data, final String separator) {
         List<String> csv = new ArrayList<>();
 //        data.forEach(line ->
 //                csv.add(line.stream().
