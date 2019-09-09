@@ -26,7 +26,7 @@ public class MyMonzoController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MyMonzoController.class);
 
-    // Imports the Main for main exchange to view
+    // Link to Main for data exchange with fxml elements
     private Main mainApp = null;
 
     public void setMainApp(Main main) {
@@ -148,7 +148,7 @@ public class MyMonzoController {
 
     @FXML
     private void exportAsCSV(ActionEvent event) {
-        CSVWriter.createCSVString(mainApp.getCategorizedLineItems(), " ");
+        CSVWriter.createCSVString(mainApp.getCategorizedLineItems());
     }
 
 

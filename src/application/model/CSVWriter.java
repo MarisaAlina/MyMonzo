@@ -1,30 +1,58 @@
 package application.model;
 
-import java.util.ArrayList;
+import com.j256.ormlite.logger.Logger;
+import com.j256.ormlite.logger.LoggerFactory;
+
+import java.io.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CSVWriter {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(CSVWriter.class);
+
     // todo has to process List of LineItems to become one big String
-    // another option: xml export - will need input change
+    // Use OpenCSV?
 
-//    List<List<String>>
-    public static String createCSVString(List<LineItem> data, final String separator) {
-        List<String> csv = new ArrayList<>();
-//        data.forEach(line ->
-//                csv.add(line.stream().
-//                        reduce((t, u) -> t + separator + u).
-//                        get() + separator)
-//        );
+    public static void createCSVString(List<LineItem> data) {
 
-        StringBuilder csvString = new StringBuilder();
+        // get each field and convert to normal string, comma separated
+        // separate rows
 
-        for (String line : csv) {
-            csvString.append(line);
-            csvString.append("\n");
+        String csv = data.stream()
+                .map(LineItem::toString)
+                .collect(Collectors.joining(","));
+
+        LOGGER.info("csv1: {}", csv);
+
+        String csv2 = data.stream()
+                .map(lineItem -> lineItem.toString())
+                .reduce("", String::concat);
+
+        LOGGER.info("csv2: {}", csv2);
+        // needs "forEach" or LineItem::getField()
+
+        try {
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("bank-statements.csv"), "UTF-8"));
+
+            bw.write(csv);
+            bw.flush();
+            bw.close();
+
+        } catch (FileNotFoundException f) {
+            LOGGER.info("Could find CSV file");
+            f.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            LOGGER.info("Could not write lineItems to CSV file");
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        return csvString.toString();
+    }
+
+    public void writeToCSVFile() {
+
     }
 }
 
