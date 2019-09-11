@@ -21,6 +21,10 @@ public class Main extends Application {
 
     private Stage primaryStage;
 
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
     private MyMonzoController myMonzoController;
 
     List<LineItem> categorizedLineItems;
@@ -52,16 +56,7 @@ public class Main extends Application {
         this.primaryStage.setTitle("MyMonzo");
         this.primaryStage.setResizable(false);
 
-        CSVParser csvParser = new CSVParser();
-        List<LineItem> lineItemsFromCSV = csvParser.parseCSV(getPATH());
-
-        // TODO currently not working as expected
-        categorizedLineItems = csvParser.processLineItems(lineItemsFromCSV);
-
-        for (LineItem lineItem : categorizedLineItems) {
-            itemsObservableList.add(lineItem);
-        }
-        LOGGER.info("Added categorized LineItems to observableList for display");
+        loadData(getPATH());
 
         this.showMyMonzoScene();
     }
@@ -88,6 +83,23 @@ public class Main extends Application {
 
     public void exitProgramme() {
         this.primaryStage.close();
+    }
+
+    public void loadData(String PATH) {
+        setPATH(PATH);
+        LOGGER.info("File Path: {}", PATH);
+
+        CSVParser csvParser = new CSVParser();
+        List<LineItem> lineItemsFromCSV = csvParser.parseCSV(PATH);
+
+        // TODO currently not working as expected
+        categorizedLineItems = csvParser.processLineItems(lineItemsFromCSV);
+
+        for (LineItem lineItem : categorizedLineItems) {
+            itemsObservableList.add(lineItem);
+        }
+
+        LOGGER.info("Added categorized LineItems to observableList for display");
     }
 
 

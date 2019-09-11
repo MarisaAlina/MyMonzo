@@ -47,12 +47,12 @@ public class CSVParser {
                 String transactionType = currentLine[2];
                 String moneyOut = currentLine[4];
 
-                // todo extract into method with catch if enum not found
                 Category category = Category.UNDEFINED;
 
-                if (currentLine[5] != null) {
+                if (!isNumeric(currentLine[5])) {
                     String assignedCategory = currentLine[5];
-                    if (Category.contains(assignedCategory)) {
+                    if (Category.forName(assignedCategory) != null &&
+                            Category.forName(assignedCategory) != Category.UNDEFINED) {
                         category = Category.valueOf(assignedCategory);
                         LOGGER.info("Assigned category: {}", category.name());
                     }
@@ -123,5 +123,12 @@ public class CSVParser {
         return amount;
     }
 
-
+    private boolean isNumeric(String input) {
+        try {
+            double d = Double.parseDouble(input);
+        } catch (NumberFormatException | NullPointerException nfe) {
+            return false;
+        }
+        return true;
+    }
 }

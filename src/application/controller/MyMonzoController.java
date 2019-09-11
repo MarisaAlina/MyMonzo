@@ -13,8 +13,9 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -148,7 +149,70 @@ public class MyMonzoController {
 
     @FXML
     private void exportAsCSV(ActionEvent event) {
-        CSVWriter.createCSVString(mainApp.getCategorizedLineItems());
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+                "CSV (*.csv)", "*.csv");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        // Show save file dialog
+        File file = fileChooser.showSaveDialog(mainApp.getPrimaryStage());
+        // end if no file is created
+        if (file == null) {
+            return;
+        }
+
+        // Make sure file has the correct extension
+        if (!file.getPath().endsWith(".csv")) {
+            file = new File(file.getPath() + ".csv");
+        }
+
+        String csv = CSVWriter.createCSVString(mainApp.getCategorizedLineItems());
+
+        try {
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
+
+            bw.write(csv);
+            bw.flush();
+            bw.close();
+
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Could not save data");
+            alert.setContentText("Could not save data to file:\n" + file.getPath());
+            alert.showAndWait();
+            e.printStackTrace();
+            e.printStackTrace();
+        }
+
+        LOGGER.info("Successfully written to file {}", file.getPath());
+    }
+
+    @FXML
+    private void importCSV(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+                "CSV files (*.csv)", "*.csv");
+        fileChooser.getExtensionFilters().add(extFilter);
+        File file = fileChooser.showOpenDialog(mainApp.getPrimaryStage());
+
+        if (file == null) {
+            return;
+        }
+
+        try {
+            mainApp.loadData(file.getPath());
+
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Could not load data");
+            alert.setContentText("Could not load data from file:\n" + file.getPath());
+
+            alert.showAndWait();
+            e.printStackTrace();
+        }
+
     }
 
 

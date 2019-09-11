@@ -3,57 +3,35 @@ package application.model;
 import com.j256.ormlite.logger.Logger;
 import com.j256.ormlite.logger.LoggerFactory;
 
-import java.io.*;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CSVWriter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CSVWriter.class);
 
-    // todo has to process List of LineItems to become one big String
-    // Use OpenCSV?
+    public static String createCSVString(List<LineItem> data) {
 
-    public static void createCSVString(List<LineItem> data) {
+        String header="Date,Reference,Transaction Type,Money In, Money Out,Balance, Category\n";
 
-        // get each field and convert to normal string, comma separated
-        // separate rows
+        String placeholder = " ";
+        String newLine = "\n";
 
         String csv = data.stream()
-                .map(LineItem::toString)
+                .flatMap(item -> Stream.of(String.valueOf(item.getDate()),
+                        String.valueOf(item.getDescription()),
+                        placeholder,
+                        placeholder,
+                        String.valueOf(item.getAmount()),
+                        String.valueOf(item.getCategory()),
+                        newLine))
                 .collect(Collectors.joining(","));
+        LOGGER.info("csv: {}", csv);
 
-        LOGGER.info("csv1: {}", csv);
-
-        String csv2 = data.stream()
-                .map(lineItem -> lineItem.toString())
-                .reduce("", String::concat);
-
-        LOGGER.info("csv2: {}", csv2);
-        // needs "forEach" or LineItem::getField()
-
-        try {
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("bank-statements.csv"), "UTF-8"));
-
-            bw.write(csv);
-            bw.flush();
-            bw.close();
-
-        } catch (FileNotFoundException f) {
-            LOGGER.info("Could find CSV file");
-            f.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            LOGGER.info("Could not write lineItems to CSV file");
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        return header + csv;
     }
 
-    public void writeToCSVFile() {
-
-    }
 }
 
 

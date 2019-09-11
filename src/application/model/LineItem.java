@@ -1,37 +1,19 @@
 package application.model;
 
-import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.logger.Logger;
 import com.j256.ormlite.logger.LoggerFactory;
-import com.j256.ormlite.table.DatabaseTable;
 import javafx.beans.property.*;
 
-import javax.annotation.Generated;
-
-/*
-- ORMLite Annotation: http://ormlite.com/javadoc/ormlite-core/doc-files/ormlite_2.html#Class-Setup
-- https://docs.oracle.com/javafx/2/binding/jfxpub-binding.htm
- */
-
-@DatabaseTable
 public class LineItem {
 
-    @Generated("id")
-    private String id;
-
-    @DatabaseField
     private SimpleDoubleProperty amount;
 
-    @DatabaseField
     private SimpleStringProperty date;
 
-    @DatabaseField
     private SimpleStringProperty description;
 
-    @DatabaseField
     private SimpleStringProperty transactionType;
 
-    @DatabaseField
     private SimpleObjectProperty<Category> category;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LineItem.class);
@@ -117,7 +99,6 @@ public class LineItem {
     @Override
     public String toString() {
         return "LineItem{" +
-                "id='" + id + '\'' +
                 ", amount=" + amount +
                 ", date=" + date +
                 ", description='" + description + '\'' +
@@ -145,5 +126,6 @@ public class LineItem {
         }
         return lineItem;
     }
+
 }
 

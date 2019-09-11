@@ -1,6 +1,9 @@
 package application.model;
 
+import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 public enum Category {
 
@@ -33,20 +36,16 @@ public enum Category {
         return this.name;
     }
 
-    public static boolean contains(String input) {
-        for (Category c : Category.values()) {
-            if (c.name().equals(input)) {
-                return true;
-            }
+
+    private static final Map<String, Category> nameToValueMap = new HashMap<>();
+
+    static {
+        for (Category category: EnumSet.allOf(Category.class)) {
+            nameToValueMap.put(category.name(), category);
         }
-        return false;
     }
 
-//    public HashSet<String> getEnums() {
-//        HashSet<String> values = new HashSet<>();
-//        for (Category c : Category.values()) {
-//            values.add(c.name());
-//        }
-//        return values;
-//    }
+    public static Category forName(String name) {
+        return nameToValueMap.get(name);
+    }
 }

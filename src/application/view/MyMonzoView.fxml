@@ -34,7 +34,7 @@
                     </font>
                 </Button>
 
-                <Button fx:id="importCSV" layoutX="123.0" layoutY="411.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="141.0" text="IMPORT CSV" textAlignment="CENTER">
+                <Button fx:id="importCSV" layoutX="123.0" layoutY="411.0" mnemonicParsing="false" onAction="#importCSV" prefHeight="27.0" prefWidth="141.0" text="IMPORT CSV" textAlignment="CENTER">
                     <font>
                         <Font name="Avenir Light" size="10.0" />
                     </font>
