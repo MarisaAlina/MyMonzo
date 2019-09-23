@@ -3,6 +3,7 @@ package application;
 import application.controller.MyMonzoController;
 import application.model.CSVParser;
 import application.model.LineItem;
+import application.model.XLSWriter;
 import com.j256.ormlite.logger.Logger;
 import com.j256.ormlite.logger.LoggerFactory;
 import javafx.application.Application;
@@ -56,7 +57,7 @@ public class Main extends Application {
         this.primaryStage.setTitle("MyMonzo");
         this.primaryStage.setResizable(false);
 
-        loadData(getPATH());
+        loadCSVData(getPATH());
 
         this.showMyMonzoScene();
     }
@@ -85,9 +86,9 @@ public class Main extends Application {
         this.primaryStage.close();
     }
 
-    public void loadData(String PATH) {
+    public void loadCSVData(String PATH) {
         setPATH(PATH);
-        LOGGER.info("File Path: {}", PATH);
+        LOGGER.info("CSV file path: {}", PATH);
 
         CSVParser csvParser = new CSVParser();
         List<LineItem> lineItemsFromCSV = csvParser.parseCSV(PATH);
@@ -98,9 +99,18 @@ public class Main extends Application {
         for (LineItem lineItem : categorizedLineItems) {
             itemsObservableList.add(lineItem);
         }
-
         LOGGER.info("Added categorized LineItems to observableList for display");
     }
+
+    public void loadXLSXData(String PATH) {
+        setPATH(PATH);
+        LOGGER.info("XLSX file path: {}", PATH);
+
+        XLSWriter xlsWriter = new XLSWriter();
+        List<LineItem> lineItemsFromXLS = xlsWriter.parseXLS(PATH);
+
+    }
+
 
 
     public static void main(String[] args) {

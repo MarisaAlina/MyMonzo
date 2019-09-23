@@ -13,7 +13,7 @@ public class CSVWriter {
 
     public static String createCSVString(List<LineItem> data) {
 
-        String header="Date,Reference,Transaction Type,Money In, Money Out,Balance, Category\n";
+        String header="Date, Reference, Transaction Type, Money In, Money Out, Balance, Category\n";
 
         String placeholder = " ";
         String newLine = "\n";

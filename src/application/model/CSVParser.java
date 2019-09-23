@@ -18,9 +18,7 @@ public class CSVParser {
     private static final Logger LOGGER = LoggerFactory.getLogger(CSVParser.class);
 
     private String splitByComma = ",";
-
     private List<LineItem> lineItemsFromCSV;
-
     private List<LineItem> categorizedLineItems;
 
 
@@ -29,7 +27,7 @@ public class CSVParser {
         lineItemsFromCSV = new ArrayList<>();
 
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(PATH))) {
-            LOGGER.info("Start parsing file at PATH: {}", PATH);
+            LOGGER.info("Parsing csvFile at: {}", PATH);
 
             String headerLine = bufferedReader.readLine();
             LOGGER.info("headerLine: {}", headerLine);

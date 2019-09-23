@@ -4,6 +4,7 @@ import application.Main;
 import application.model.CSVWriter;
 import application.model.Category;
 import application.model.LineItem;
+import application.model.XLSWriter;
 import com.j256.ormlite.logger.Logger;
 import com.j256.ormlite.logger.LoggerFactory;
 import javafx.collections.FXCollections;
@@ -148,11 +149,10 @@ public class MyMonzoController {
     }
 
     @FXML
-    private void exportAsCSV(ActionEvent event) {
+    private void exportAsXLSX(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
-                "CSV (*.csv)", "*.csv");
-        fileChooser.getExtensionFilters().add(extFilter);
+        FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("XLSX (*.xlsx)", "*.xlsx");
+        fileChooser.getExtensionFilters().add(extensionFilter);
 
         // Show save file dialog
         File file = fileChooser.showSaveDialog(mainApp.getPrimaryStage());
@@ -160,8 +160,54 @@ public class MyMonzoController {
         if (file == null) {
             return;
         }
+        // ensure correct extension is added
+        if (!file.getPath().endsWith(".xlsx")) {
+            file = new File(file.getPath() + ".xlsx");
+        }
 
-        // Make sure file has the correct extension
+        try {
+            XLSWriter.exportToXLS(mainApp.getCategorizedLineItems());
+        } catch (Exception e) {
+            showFileSaveErrorAlert(file);
+            e.printStackTrace();
+        }
+
+        LOGGER.info("Successfully created XLSX file: {}", file.getPath());
+    }
+
+    @FXML
+    private void importXLSX(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+                "XLSX files (*.xlsx)", "*.xlsx");
+        fileChooser.getExtensionFilters().add(extFilter);
+        File file = fileChooser.showOpenDialog(mainApp.getPrimaryStage());
+
+        if (file == null) {
+            return;
+        }
+
+        try {
+            mainApp.loadCSVData(file.getPath());
+        } catch (Exception e) {
+            showFileImportErrorAlert(file);
+            e.printStackTrace();
+        }
+    }
+
+
+    @FXML
+    private void exportAsCSV(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+                "CSV (*.csv)", "*.csv");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        File file = fileChooser.showSaveDialog(mainApp.getPrimaryStage());
+        if (file == null) {
+            return;
+        }
+
         if (!file.getPath().endsWith(".csv")) {
             file = new File(file.getPath() + ".csv");
         }
@@ -176,12 +222,7 @@ public class MyMonzoController {
             bw.close();
 
         } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Could not save data");
-            alert.setContentText("Could not save data to file:\n" + file.getPath());
-            alert.showAndWait();
-            e.printStackTrace();
+            showFileSaveErrorAlert(file);
             e.printStackTrace();
         }
 
@@ -201,18 +242,11 @@ public class MyMonzoController {
         }
 
         try {
-            mainApp.loadData(file.getPath());
-
+            mainApp.loadCSVData(file.getPath());
         } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Could not load data");
-            alert.setContentText("Could not load data from file:\n" + file.getPath());
-
-            alert.showAndWait();
+            showFileImportErrorAlert(file);
             e.printStackTrace();
         }
-
     }
 
 
@@ -225,6 +259,22 @@ public class MyMonzoController {
                 .collect(Collectors.groupingBy(LineItem::getCategory, summingAmount));
 
         return sumByCategory;
+    }
+
+    private void showFileSaveErrorAlert(File file) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Could not save data");
+        alert.setContentText("Could not save data to file:\n" + file.getPath());
+        alert.showAndWait();
+    }
+
+    private void showFileImportErrorAlert(File file) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Could not load data");
+        alert.setContentText("Could not load data from file:\n" + file.getPath());
+        alert.showAndWait();
     }
 
 

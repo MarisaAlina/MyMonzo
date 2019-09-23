@@ -20,7 +20,14 @@
     <children>
         <Pane id="rightPane" layoutX="-107.0" layoutY="-205.0" prefHeight="879.0" prefWidth="1233.0">
             <children>
-                <Label id="myMonzoLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="155.0" layoutY="335.0" prefHeight="41.0" prefWidth="77.0" text="MyMonzo">
+
+                <ImageView fitHeight="81.0" fitWidth="77.0" layoutX="155.0" layoutY="242.0">
+                    <image>
+                        <Image url="@../../../img/piggy-lime.png" />
+                    </image>
+                </ImageView>
+
+                <Label id="myMonzoLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="155.0" layoutY="335.0" prefHeight="58.0" prefWidth="85.0" text="MyMonzo">
                     <font>
                         <Font name="Bifur" size="13.0" />
                     </font>
@@ -34,23 +41,33 @@
                     </font>
                 </Button>
 
-                <Button fx:id="importCSV" layoutX="123.0" layoutY="411.0" mnemonicParsing="false" onAction="#importCSV" prefHeight="27.0" prefWidth="141.0" text="IMPORT CSV" textAlignment="CENTER">
+                <Label layoutX="180.0" layoutY="392.0" text="XLS" fx:id="xlsLabel" />
+
+                <Button fx:id="importXLSX" layoutX="123.0" layoutY="422.0" mnemonicParsing="false" onAction="#importXLSX" prefHeight="27.0" prefWidth="141.0" text="IMPORT XLS" textAlignment="CENTER">
                     <font>
                         <Font name="Avenir Light" size="10.0" />
                     </font>
                 </Button>
 
-                <Button fx:id="exportData" layoutX="123.0" layoutY="481.0" mnemonicParsing="false" onAction="#exportAsCSV" prefHeight="27.0" prefWidth="141.0" text="EXPORT CSV" textAlignment="CENTER">
+                <Button fx:id="exportXLSX" layoutX="123.0" layoutY="457.0" mnemonicParsing="false" onAction="#exportAsXLSX" prefHeight="27.0" prefWidth="141.0" text="EXPORT XLS" textAlignment="CENTER">
                     <font>
                         <Font name="Avenir Light" size="10.0" />
                     </font>
                 </Button>
 
-                <ImageView fitHeight="81.0" fitWidth="77.0" layoutX="155.0" layoutY="242.0">
-                    <image>
-                        <Image url="@../../../img/piggy-lime.png" />
-                    </image>
-                </ImageView>
+                <Label fx:id="csvLabel" layoutX="180.0" layoutY="531.0" text="CSV" />
+
+                <Button fx:id="importCSV" layoutX="123.0" layoutY="561.0" mnemonicParsing="false" onAction="#importCSV" prefHeight="27.0" prefWidth="141.0" text="IMPORT CSV" textAlignment="CENTER">
+                    <font>
+                        <Font name="Avenir Light" size="10.0" />
+                    </font>
+                </Button>
+
+                <Button fx:id="exportCSV" layoutX="123.0" layoutY="600.0" mnemonicParsing="false" onAction="#exportAsCSV" prefHeight="27.0" prefWidth="141.0" text="EXPORT CSV" textAlignment="CENTER">
+                    <font>
+                        <Font name="Avenir Light" size="10.0" />
+                    </font>
+                </Button>
 
                 <TableView fx:id="dataDisplayTable" editable="true" layoutX="314.0" layoutY="242.0" prefHeight="273.0" prefWidth="642.0">
                     <columns>
