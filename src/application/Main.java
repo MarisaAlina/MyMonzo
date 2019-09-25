@@ -3,6 +3,7 @@ package application;
 import application.controller.MyMonzoController;
 import application.model.CSVParser;
 import application.model.LineItem;
+import application.model.XLSParser;
 import application.model.XLSWriter;
 import com.j256.ormlite.logger.Logger;
 import com.j256.ormlite.logger.LoggerFactory;
@@ -106,9 +107,13 @@ public class Main extends Application {
         setPATH(PATH);
         LOGGER.info("XLSX file path: {}", PATH);
 
-        XLSWriter xlsWriter = new XLSWriter();
-        List<LineItem> lineItemsFromXLS = xlsWriter.parseXLS(PATH);
+        XLSParser xlsParser = new XLSParser();
+        List<LineItem> lineItemsFromXLS = xlsParser.parseXLS(PATH);
 
+        for (LineItem lineItem : categorizedLineItems) {
+            itemsObservableList.add(lineItem);
+        }
+        LOGGER.info("Added categorized LineItems to observableList for display");
     }
 
 

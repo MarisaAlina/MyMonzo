@@ -57,7 +57,7 @@ public class CSVParser {
                 }
 
                 double amount = parseAmount(moneyOut);
-                String trimmedDescription = trimDescriptionFieldOfDate(description);
+                String trimmedDescription = formatDescriptionWhenDate(description);
 
                 LineItem lineItem = new LineItem(date, trimmedDescription, amount, category);
                 LOGGER.info("Parsed lineItemObject: {}", lineItem.toString());
@@ -89,7 +89,7 @@ public class CSVParser {
         return categorizedLineItems;
     }
 
-    private String trimDescriptionFieldOfDate(String description) {
+    private String formatDescriptionWhenDate(String description) {
 
         String[] patterns = {"dd MMM yy", "dd/MM/yy HH:mm"};
 

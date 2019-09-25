@@ -188,7 +188,7 @@ public class MyMonzoController {
         }
 
         try {
-            mainApp.loadCSVData(file.getPath());
+            mainApp.loadXLSXData(file.getPath());
         } catch (Exception e) {
             showFileImportErrorAlert(file);
             e.printStackTrace();
