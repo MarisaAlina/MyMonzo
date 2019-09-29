@@ -21,20 +21,12 @@ public class LineItem {
     public LineItem() {
     }
 
-    public LineItem(SimpleStringProperty date, SimpleStringProperty description, SimpleStringProperty transactionType, SimpleDoubleProperty amount) {
-        this.amount = amount;
-        this.date = date;
-        this.description = description;
-        this.transactionType = transactionType;
-    }
-
     public LineItem(String date, String description, Double amount, Category category) {
         this.date = new SimpleStringProperty(date);
         this.amount = new SimpleDoubleProperty(amount);
         this.description = new SimpleStringProperty(description);
         this.category = new SimpleObjectProperty<Category>(category);
     }
-
 
     public double getAmount() {
         return amount.get();

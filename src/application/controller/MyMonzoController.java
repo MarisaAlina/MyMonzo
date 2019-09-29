@@ -75,7 +75,6 @@ public class MyMonzoController {
         descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
         amountColumn.setCellValueFactory(cellData -> cellData.getValue().amountProperty().asObject());
         categoryColumn.setCellValueFactory(cellData -> cellData.getValue().categoryProperty().asString());
-        LOGGER.info("Initialised table with data from CSV");
 
         barChart.setTitle("Totals per Category");
         pieChart.setTitle("Category of Total");
@@ -166,7 +165,7 @@ public class MyMonzoController {
         }
 
         try {
-            XLSWriter.exportToXLS(mainApp.getCategorizedLineItems());
+            XLSWriter.exportToXLS(mainApp.getCategorizedLineItems(), file);
         } catch (Exception e) {
             showFileSaveErrorAlert(file);
             e.printStackTrace();
@@ -186,11 +185,12 @@ public class MyMonzoController {
         if (file == null) {
             return;
         }
-
         try {
             mainApp.loadXLSXData(file.getPath());
+            dataDisplayTable.refresh();
         } catch (Exception e) {
             showFileImportErrorAlert(file);
+            LOGGER.info("Parsing error at {}", file.getPath());
             e.printStackTrace();
         }
     }
@@ -243,6 +243,7 @@ public class MyMonzoController {
 
         try {
             mainApp.loadCSVData(file.getPath());
+            dataDisplayTable.refresh();
         } catch (Exception e) {
             showFileImportErrorAlert(file);
             e.printStackTrace();

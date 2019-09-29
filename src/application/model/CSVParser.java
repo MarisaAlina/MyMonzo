@@ -42,16 +42,14 @@ public class CSVParser {
 
                 String date = currentLine[0];
                 String description = currentLine[1];
-                String transactionType = currentLine[2];
                 String moneyOut = currentLine[4];
 
                 Category category = Category.UNDEFINED;
 
                 if (!isNumeric(currentLine[5])) {
                     String assignedCategory = currentLine[5];
-                    if (Category.forName(assignedCategory) != null &&
-                            Category.forName(assignedCategory) != Category.UNDEFINED) {
-                        category = Category.valueOf(assignedCategory);
+                    if (Category.forName(assignedCategory) != Category.UNDEFINED) {
+                        category = Category.forName(assignedCategory);
                         LOGGER.info("Assigned category: {}", category.name());
                     }
                 }

@@ -4,7 +4,6 @@ import application.controller.MyMonzoController;
 import application.model.CSVParser;
 import application.model.LineItem;
 import application.model.XLSParser;
-import application.model.XLSWriter;
 import com.j256.ormlite.logger.Logger;
 import com.j256.ormlite.logger.LoggerFactory;
 import javafx.application.Application;
@@ -45,7 +44,7 @@ public class Main extends Application {
         Main.PATH = PATH;
     }
 
-    private ObservableList<LineItem> itemsObservableList = FXCollections.observableArrayList();
+    private ObservableList<LineItem> itemsObservableList;
 
     public ObservableList<LineItem> getLineItems() {
         return itemsObservableList;
@@ -97,9 +96,12 @@ public class Main extends Application {
         // TODO currently not working as expected
         categorizedLineItems = csvParser.processLineItems(lineItemsFromCSV);
 
+        itemsObservableList = FXCollections.observableArrayList();
+
         for (LineItem lineItem : categorizedLineItems) {
             itemsObservableList.add(lineItem);
         }
+
         LOGGER.info("Added categorized LineItems to observableList for display");
     }
 
@@ -107,15 +109,17 @@ public class Main extends Application {
         setPATH(PATH);
         LOGGER.info("XLSX file path: {}", PATH);
 
+        itemsObservableList.clear();
+
         XLSParser xlsParser = new XLSParser();
         List<LineItem> lineItemsFromXLS = xlsParser.parseXLS(PATH);
 
-        for (LineItem lineItem : categorizedLineItems) {
+        for (LineItem lineItem : lineItemsFromXLS) {
             itemsObservableList.add(lineItem);
         }
-        LOGGER.info("Added categorized LineItems to observableList for display");
-    }
 
+        LOGGER.info("Added LineItems from XLSX to new observableList for display");
+    }
 
 
     public static void main(String[] args) {

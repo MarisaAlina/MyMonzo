@@ -1,8 +1,6 @@
 package application.model;
-
 import java.util.EnumSet;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 public enum Category {
@@ -32,20 +30,16 @@ public enum Category {
         name = s;
     }
 
-    public String toString() {
-        return this.name;
-    }
-
-
     private static final Map<String, Category> nameToValueMap = new HashMap<>();
 
     static {
         for (Category category: EnumSet.allOf(Category.class)) {
-            nameToValueMap.put(category.name(), category);
+            nameToValueMap.put(category.name, category);
         }
     }
 
     public static Category forName(String name) {
         return nameToValueMap.get(name);
     }
+
 }

@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -24,69 +25,45 @@ public class XLSParser {
 
     public List<LineItem> parseXLS(String path) {
 
+        lineItemsFromXLS = new ArrayList<>();
+
         try {
-            FileInputStream excelFile =  new FileInputStream(new File(path));
+            FileInputStream excelFile = new FileInputStream(new File(path));
             Workbook xssfWorkbook = new XSSFWorkbook(excelFile);
             Sheet dataSheet = xssfWorkbook.getSheetAt(0);
 
             LOGGER.info("Parsing xlsxFile at: {} ", path);
 
-            for (int rowIndex = 0; rowIndex <= dataSheet.getLastRowNum(); rowIndex++) {
+            for (Row row : dataSheet) {
 
-                Row row = dataSheet.getRow(rowIndex);
+                String date = "";
+                String description = "";
+                double moneyOut = 0.0;
+                Category category = Category.UNDEFINED;
 
-                if (row != null) {
-                    Cell cell = row.getCell(colIndex);
+                if (row.getRowNum() != 0) {
+                    LOGGER.info("Skipped header row");
 
-                    if (cell != null) {
-                        // Found column and there is value in the cell.
-                       String cellValueMaybeNull = cell.getStringCellValue();
-                        // Do something with the cellValueMaybeNull here ...
-                    }
-                }
-            }
+                    for (Cell cell : row) {
+                        CellReference cellRef = new CellReference(row.getRowNum(), cell.getColumnIndex());
+                        LOGGER.info("Cell Ref: {}", cellRef.formatAsString());
 
-            for (Row row :dataSheet) {
-                String currentCell = "";
-                double num = 0.0;
-                LineItem lineItem = new LineItem();
-
-                for (Cell cell : row) {
-                    CellReference cellRef = new CellReference(row.getRowNum(), cell.getColumnIndex());
-                    LOGGER.info("Cell Ref: {}", cellRef.formatAsString());
-
-                    switch (cell.getCellType()) {
-                        case STRING:
-                            LOGGER.info(cell.getRichStringCellValue().getString());
-                            currentCell = cell.getRichStringCellValue().getString();
-                            break;
-                        case NUMERIC:
-                            LOGGER.info(String.valueOf(cell.getNumericCellValue()));
-                            num = cell.getNumericCellValue();
-                            break;
+                        if (cell.getColumnIndex() == 0) {
+                            date = cell.getStringCellValue();
+                        } else if (cell.getColumnIndex() == 1) {
+                            description = formatDescriptionWhenDate(cell.getStringCellValue());
+                        } else if (cell.getColumnIndex() == 4) {
+                            moneyOut = cell.getNumericCellValue();
+                        } else if (cell.getColumnIndex() == 6 && cell.getStringCellValue() != "") {
+                            category = Category.forName(cell.getStringCellValue());
+                        }
                     }
 
-                    lineItem = new LineItem(currentCell,
-                            formatDescriptionWhenDate(currentCell),
-                            parseAmount(currentCell),
-                            Category.valueOf(currentCell)
-                    );
+                    LineItem lineItem = new LineItem(date, description, moneyOut, category);
+                    lineItemsFromXLS.add(lineItem);
+                    LOGGER.info("Added item to list: {} ", lineItem.toString());
                 }
-
-                lineItemsFromXLS.add(lineItem);
             }
-
-//            Iterator<Row> rowIterator = dataSheet.iterator();
-//            while (rowIterator.hasNext()) {
-//                Row currentRow = rowIterator.next();
-//                Iterator<Cell> cellIterator = currentRow.iterator();
-//
-//                while (cellIterator.hasNext()) {
-//                    Cell currentCell = cellIterator.next();
-//
-//                }
-//            }
-
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -97,66 +74,6 @@ public class XLSParser {
         return lineItemsFromXLS;
     }
 
-
-//    public List<LineItem> parseXLS(String path) {
-//
-//        try {
-//            FileInputStream excelFile =  new FileInputStream(new File(path));
-//            Workbook xssfWorkbook = new XSSFWorkbook(excelFile);
-//            Sheet dataSheet = xssfWorkbook.getSheetAt(0);
-//
-//            LOGGER.info("Parsing xlsxFile at: {} ", path);
-//
-//            for (Row row :dataSheet) {
-//                String currentCell = "";
-//                double num = 0.0;
-//                LineItem lineItem = new LineItem();
-//
-//                for (Cell cell : row) {
-//                    CellReference cellRef = new CellReference(row.getRowNum(), cell.getColumnIndex());
-//                    LOGGER.info("Cell Ref: {}", cellRef.formatAsString());
-//
-//                    switch (cell.getCellType()) {
-//                        case STRING:
-//                            LOGGER.info(cell.getRichStringCellValue().getString());
-//                            currentCell = cell.getRichStringCellValue().getString();
-//                            break;
-//                        case NUMERIC:
-//                            LOGGER.info(String.valueOf(cell.getNumericCellValue()));
-//                            num = cell.getNumericCellValue();
-//                            break;
-//                    }
-//
-//                    lineItem = new LineItem(currentCell,
-//                            formatDescriptionWhenDate(currentCell),
-//                            parseAmount(currentCell),
-//                            Category.valueOf(currentCell)
-//                            );
-//                }
-//
-//                lineItemsFromXLS.add(lineItem);
-//            }
-//
-////            Iterator<Row> rowIterator = dataSheet.iterator();
-////            while (rowIterator.hasNext()) {
-////                Row currentRow = rowIterator.next();
-////                Iterator<Cell> cellIterator = currentRow.iterator();
-////
-////                while (cellIterator.hasNext()) {
-////                    Cell currentCell = cellIterator.next();
-////
-////                }
-////            }
-//
-//
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return lineItemsFromXLS;
-//    }
 
     private String formatDescriptionWhenDate(String description) {
         String[] patterns = {"dd MMM yy", "dd/MM/yy HH:mm"};
@@ -171,20 +88,6 @@ public class XLSParser {
             }
         }
         return description.trim();
-    }
-
-    private Double parseAmount(String moneyOut) {
-        double amount = 0.0;
-        try {
-            amount = Double.parseDouble(moneyOut);
-        } catch (NumberFormatException nfe) {
-            if (moneyOut.toCharArray().length == 1) {
-                LOGGER.info("Cell is char, exception: {}", nfe);
-            } else {
-                LOGGER.info("First row is description. Exception: {} ", nfe);
-            }
-        }
-        return amount;
     }
 
 }

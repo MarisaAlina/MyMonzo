@@ -4,6 +4,7 @@ import com.j256.ormlite.logger.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -14,7 +15,7 @@ public class XLSWriter {
     private static final Logger LOGGER = LoggerFactory.getLogger(XLSWriter.class);
     private static String[] columns = {"Date", "Description", "Transaction Type", "Money In", "Money Out", "Balance", "Category"};
 
-    public static void exportToXLS(List<LineItem> data) {
+    public static void exportToXLS(List<LineItem> data, File file) {
 
         Workbook xssfWorkbook = new XSSFWorkbook();
         CreationHelper createHelper = xssfWorkbook.getCreationHelper();
@@ -55,7 +56,7 @@ public class XLSWriter {
             sheet.autoSizeColumn(i);
         }
 
-        try (OutputStream fileOut = new FileOutputStream("Test-Transactions.xlsx")) {
+        try (OutputStream fileOut = new FileOutputStream(file.getPath())) {
             xssfWorkbook.write(fileOut);
             xssfWorkbook.close();
         } catch (IOException e) {
