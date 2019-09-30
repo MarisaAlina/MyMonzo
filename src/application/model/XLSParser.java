@@ -34,12 +34,12 @@ public class XLSParser {
 
             LOGGER.info("Parsing xlsxFile at: {} ", path);
 
-            for (Row row : dataSheet) {
+            String date = "";
+            String description = "";
+            double moneyOut = 0.0;
+            Category category = Category.UNDEFINED;
 
-                String date = "";
-                String description = "";
-                double moneyOut = 0.0;
-                Category category = Category.UNDEFINED;
+            for (Row row : dataSheet) {
 
                 if (row.getRowNum() != 0) {
                     LOGGER.info("Skipped header row");
@@ -54,7 +54,7 @@ public class XLSParser {
                             description = formatDescriptionWhenDate(cell.getStringCellValue());
                         } else if (cell.getColumnIndex() == 4) {
                             moneyOut = cell.getNumericCellValue();
-                        } else if (cell.getColumnIndex() == 6 && cell.getStringCellValue() != "") {
+                        } else if (cell.getColumnIndex() == 6 && !cell.getStringCellValue().isEmpty()) {
                             category = Category.forName(cell.getStringCellValue());
                         }
                     }

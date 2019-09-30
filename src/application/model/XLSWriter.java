@@ -47,7 +47,7 @@ public class XLSWriter {
             row.createCell(3).setCellValue(placeholder);
             row.createCell(4).setCellValue(lineItem.getAmount());
             row.createCell(5).setCellValue(placeholder);
-            row.createCell(6).setCellValue(String.valueOf(lineItem.getCategory()));
+            row.createCell(6).setCellValue(lineItem.getCategory().getCategoryByName());
         }
 
         LOGGER.info("Lineitem attributes written to cells");

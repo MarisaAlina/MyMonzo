@@ -5,36 +5,40 @@ import java.util.Map;
 
 public enum Category {
 
-    RESTAURANTS("Restaurants"),
-    GROCERIES("Groceries"),
-    RENT("Rent"),
-    PHONE("Phone"),
-    GYM("Gym"),
     BEAUTY("Beauty"),
-    TRAVELLING("Travelling"),
-    CLOTHING("Clothing"),
-    TFL("TFL"),
     BIKE("Bike"),
-    MEDICAL("Medical"),
-    INSURANCE("Insurance"),
-    GARDENING("Gardening"),
+    CLOTHING("Clothing"),
     DEBT_REDUCTION("Debt_Reduction"),
-    EVENTS("Events"),
-    GIFTS("Gifts"),
     EDUCATION("Education"),
+    EVENTS("Events"),
+    GARDENING("Gardening"),
+    GIFTS("Gifts"),
+    GROCERIES("Groceries"),
+    GYM("Gym"),
+    INSURANCE("Insurance"),
+    MEDICAL("Medical"),
+    PHONE("Phone"),
+    RENT("Rent"),
+    RESTAURANTS("Restaurants"),
+    TFL("TFL"),
+    TRAVELLING("Travelling"),
     UNDEFINED("undefined");
 
     private String name;
 
     private Category(String s) {
-        name = s;
+        this.name = s;
+    }
+
+    public String getCategoryByName() {
+        return name;
     }
 
     private static final Map<String, Category> nameToValueMap = new HashMap<>();
 
     static {
         for (Category category: EnumSet.allOf(Category.class)) {
-            nameToValueMap.put(category.name, category);
+            nameToValueMap.put(category.getCategoryByName(), category);
         }
     }
 
