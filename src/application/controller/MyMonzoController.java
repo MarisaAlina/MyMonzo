@@ -107,11 +107,22 @@ public class MyMonzoController {
         alert.setContentText("Are you sure you want to reset all categories?");
 
         Optional<ButtonType> result = alert.showAndWait();
+
         if (result.get() == ButtonType.OK) {
+
             for (LineItem lineItem : mainApp.getLineItems()) {
                 lineItem.setCategory(Category.UNDEFINED);
+                LOGGER.info("Category {} set to: {}", lineItem.getDescription(), lineItem.getCategory().getCategoryByName());
                 LOGGER.info("Reset all categories");
+            }
+
+            dataDisplayTable.refresh();
+
+            if (dataSeries1 != null) {
                 dataSeries1.getData().clear();
+            }
+
+            if (pieChart != null) {
                 pieChart.getData().clear();
             }
         }
@@ -124,11 +135,10 @@ public class MyMonzoController {
         if (dataSeries1 == null) {
             dataSeries1 = new XYChart.Series();
             LOGGER.info("Initiliazed new dataseries: {}", dataSeries1);
-            // can cause labels to squeeze to the left
         }
 
         if (dataSeries1.getData() != null && pieChart.getData() != null) {
-            LOGGER.info("Clearing data from charts");
+            LOGGER.info("Clearing old data from charts");
             dataSeries1.getData().clear();
             pieChart.getData().clear();
             barChart.getData().clear();

@@ -50,7 +50,7 @@ public class XLSWriter {
             row.createCell(6).setCellValue(lineItem.getCategory().getCategoryByName());
         }
 
-        LOGGER.info("Lineitem attributes written to cells");
+        LOGGER.info(" {} Lineitems written to xlsx", data.size());
 
         for(int i=0; i<columns.length; i++) {
             sheet.autoSizeColumn(i);

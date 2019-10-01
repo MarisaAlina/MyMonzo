@@ -46,7 +46,7 @@ public class XLSParser {
 
                     for (Cell cell : row) {
                         CellReference cellRef = new CellReference(row.getRowNum(), cell.getColumnIndex());
-                        LOGGER.info("Cell Ref: {}", cellRef.formatAsString());
+                        LOGGER.info("Cell Ref - row: {}, column: {}", cellRef.getRow(), cellRef.formatAsString());
 
                         if (cell.getColumnIndex() == 0) {
                             date = cell.getStringCellValue();
@@ -58,10 +58,9 @@ public class XLSParser {
                             category = Category.forName(cell.getStringCellValue());
                         }
                     }
-
                     LineItem lineItem = new LineItem(date, description, moneyOut, category);
                     lineItemsFromXLS.add(lineItem);
-                    LOGGER.info("Added item to list: {} ", lineItem.toString());
+                    LOGGER.info("Added {} item(s) to list: {} ", lineItemsFromXLS.size(), lineItem.toString());
                 }
             }
 
@@ -85,6 +84,7 @@ public class XLSParser {
                 return description.substring(pattern.length()).trim();
             } catch (ParseException e) {
                 LOGGER.info("Could not parse date for {}", description);
+                // if ran through twice, no date was in the description
             }
         }
         return description.trim();
