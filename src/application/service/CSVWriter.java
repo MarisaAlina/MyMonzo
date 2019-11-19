@@ -1,5 +1,6 @@
-package application.model;
+package application.service;
 
+import application.model.LineItem;
 import com.j256.ormlite.logger.Logger;
 import com.j256.ormlite.logger.LoggerFactory;
 

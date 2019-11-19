@@ -1,9 +1,9 @@
 package application;
 
 import application.controller.MyMonzoController;
-import application.model.CSVParser;
+import application.service.CSVParser;
 import application.model.LineItem;
-import application.model.XLSParser;
+import application.service.XLSParser;
 import com.j256.ormlite.logger.Logger;
 import com.j256.ormlite.logger.LoggerFactory;
 import javafx.application.Application;
